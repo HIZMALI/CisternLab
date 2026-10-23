@@ -25,6 +25,9 @@ import { DEMO_DATASETS, DEFAULT_SCENARIO } from "./data/demo";
 import { simulate } from "./engine/simulation";
 import type { SimulationInput } from "./engine/simulation";
 import { resultsToCsv } from "./engine/csv";
+import RainfallSource from "./components/RainfallSource";
+import { syntheticDataset } from "./data/rainfall";
+import type { HistoricalDataset, SourceMode } from "./data/rainfall";
 
 const WaterChart = lazy(() => import("./components/WaterChart"));
 
@@ -303,12 +306,34 @@ export default function App() {
   const [scenario, setScenario] = useState<Scenario>({ ...DEFAULT_SCENARIO });
   const [place, setPlace] = useState<Place>("Home");
   const [datasetIndex, setDatasetIndex] = useState(0);
+  const [sourceMode, setSourceMode] = useState<SourceMode>("synthetic");
+  const [historical, setHistorical] = useState<HistoricalDataset | null>(null);
   const [revision, setRevision] = useState(0);
   const [chartMode, setChartMode] = useState<"storage" | "balance">("storage");
   const [showAllDays, setShowAllDays] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [exported, setExported] = useState(false);
-  const dataset = DEMO_DATASETS[datasetIndex];
+  const demo = DEMO_DATASETS[datasetIndex];
+  const synthetic = useMemo(
+    () => syntheticDataset(datasetIndex),
+    [datasetIndex],
+  );
+  const dataset = historical ?? synthetic;
+  const dayCount = dataset.rainfallMm.length;
+  const balanceVolume = (value: number) =>
+    historical && value >= 10000
+      ? new Intl.NumberFormat("en-GB", {
+          notation: "compact",
+          maximumFractionDigits: 1,
+        }).format(value)
+      : format(value, 1);
+  const metricVolume = (value: number) =>
+    value >= 1000000
+      ? new Intl.NumberFormat("en-GB", {
+          notation: "compact",
+          maximumFractionDigits: 2,
+        }).format(value)
+      : format(value);
   const input = useMemo(
     () => ({ ...scenario, rainfallMm: dataset.rainfallMm }),
     [scenario, dataset],
@@ -340,16 +365,22 @@ export default function App() {
   function reset() {
     selectPlace("Home");
     setDatasetIndex(0);
+    setSourceMode("synthetic");
+    setHistorical(null);
+    setShowAllDays(false);
     setChartMode("storage");
   }
   function exportResults() {
-    const blob = new Blob([resultsToCsv(input, result, dataset.name)], {
+    const blob = new Blob([resultsToCsv(input, result, dataset)], {
       type: "text/csv;charset=utf-8;",
     });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `cisternlab-${dataset.id}-demo.csv`;
+    link.download =
+      dataset.kind === "synthetic"
+        ? `cisternlab-${dataset.id}-demo.csv`
+        : `cisternlab-era5-${dataset.location.id}-${dataset.year}.csv`;
     link.click();
     URL.revokeObjectURL(url);
     setExported(true);
@@ -367,7 +398,7 @@ export default function App() {
               <Droplet size={21} strokeWidth={1.7} />
             </span>
             Cistern<span className="brand-light">Lab</span>
-            <span className="build-badge">BUILD 01</span>
+            <span className="build-badge">BUILD 02</span>
           </a>
           <nav
             className={menuOpen ? "nav open" : "nav"}
@@ -437,11 +468,13 @@ export default function App() {
 
         <div className="demo-notice">
           <span className="demo-label">
-            <FlaskConical size={13} /> DEMO DATA
+            <FlaskConical size={13} />{" "}
+            {historical ? "HISTORICAL REANALYSIS — ERA5" : "DEMO DATA"}
           </span>
           <p>
-            This is an exploration space. Rainfall is synthetic, and every
-            result is an estimate.
+            {historical
+              ? "Rainfall is historical ERA5 reanalysis, not station measurements. Simulation results remain estimates."
+              : "This is an exploration space. Rainfall is synthetic, and every result is an estimate."}
           </p>
           <a href="#methodology">
             How it works <ArrowUpRight size={13} />
@@ -465,6 +498,22 @@ export default function App() {
               {exported ? "CSV downloaded" : "Export results"}
             </button>
           </div>
+
+          <RainfallSource
+            mode={sourceMode}
+            dataset={dataset}
+            onModeChange={(mode) => {
+              setSourceMode(mode);
+              if (mode === "synthetic") setHistorical(null);
+              setShowAllDays(false);
+              setExported(false);
+            }}
+            onLoad={(data) => {
+              setHistorical(data);
+              setShowAllDays(false);
+              setExported(false);
+            }}
+          />
 
           <div className="workspace-grid">
             <aside
@@ -565,43 +614,60 @@ export default function App() {
                     onChange={(v) => setParameter("initialStorageL", v)}
                   />
                 </div>
-                <div className="rainfall-field">
-                  <label className="field-label" htmlFor="rainfall-pattern">
-                    Rainfall pattern <span className="tiny-tag">SYNTHETIC</span>
-                  </label>
-                  <div className="select-wrap">
-                    <CloudRain size={16} />
-                    <select
-                      id="rainfall-pattern"
-                      value={datasetIndex}
-                      onChange={(e) => {
-                        setDatasetIndex(Number(e.target.value));
-                        setExported(false);
-                      }}
-                    >
-                      {DEMO_DATASETS.map((item, i) => (
-                        <option key={item.id} value={i}>
-                          {item.name}
-                        </option>
+                {!historical ? (
+                  <div className="rainfall-field">
+                    <label className="field-label" htmlFor="rainfall-pattern">
+                      Rainfall pattern{" "}
+                      <span className="tiny-tag">SYNTHETIC</span>
+                    </label>
+                    <div className="select-wrap">
+                      <CloudRain size={16} />
+                      <select
+                        id="rainfall-pattern"
+                        value={datasetIndex}
+                        onChange={(e) => {
+                          setDatasetIndex(Number(e.target.value));
+                          setExported(false);
+                        }}
+                      >
+                        {DEMO_DATASETS.map((item, i) => (
+                          <option key={item.id} value={i}>
+                            {item.name}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown size={14} />
+                    </div>
+                    <p>{demo.description}</p>
+                    <div className="rainfall-spark" aria-hidden="true">
+                      {demo.rainfallMm.map((rain, i) => (
+                        <span
+                          key={i}
+                          style={{
+                            height: `${Math.max(3, (rain / 42) * 35)}px`,
+                          }}
+                        />
                       ))}
-                    </select>
-                    <ChevronDown size={14} />
+                    </div>
+                    <div className="spark-labels">
+                      <span>Day 1</span>
+                      <span>30 simulated days</span>
+                      <span>Day 30</span>
+                    </div>
                   </div>
-                  <p>{dataset.description}</p>
-                  <div className="rainfall-spark" aria-hidden="true">
-                    {dataset.rainfallMm.map((rain, i) => (
-                      <span
-                        key={i}
-                        style={{ height: `${Math.max(3, (rain / 42) * 35)}px` }}
-                      />
-                    ))}
+                ) : (
+                  <div className="rainfall-field active-rainfall-note">
+                    <CloudRain size={17} />
+                    <p>
+                      <strong>
+                        {historical.year} · {historical.location.name}
+                      </strong>
+                      <br />
+                      {dayCount} validated daily ERA5 values. Change the source
+                      above; scenario controls reuse this series.
+                    </p>
                   </div>
-                  <div className="spark-labels">
-                    <span>Day 1</span>
-                    <span>30 simulated days</span>
-                    <span>Day 30</span>
-                  </div>
-                </div>
+                )}
               </div>
               <div className="config-footer">
                 <span className="live-dot" /> Recalculates as you explore
@@ -611,7 +677,7 @@ export default function App() {
             <div className="results-column">
               <div className="results-heading">
                 <span>
-                  <span className="live-dot" /> Your 30-day outlook
+                  <span className="live-dot" /> Your {dayCount}-day outlook
                 </span>
                 <span className="estimate-label">ESTIMATED RESULT</span>
               </div>
@@ -625,7 +691,7 @@ export default function App() {
                     Rainwater put to use <Droplet size={17} />
                   </div>
                   <p className="metric-number" data-testid="water-used">
-                    {format(totals.usedL)} <span>L</span>
+                    {metricVolume(totals.usedL)} <span>L</span>
                   </p>
                   <p className="metric-caption">
                     Potential freshwater displaced
@@ -645,7 +711,7 @@ export default function App() {
                   <p className="metric-caption">
                     {coverage === null
                       ? "No demand configured"
-                      : `${daysFullyServed} of 30 days fully supplied`}
+                      : `${daysFullyServed} of ${dayCount} days fully supplied`}
                   </p>
                   <div className="coverage-track" aria-hidden="true">
                     <span style={{ width: `${coverage ?? 0}%` }} />
@@ -656,7 +722,7 @@ export default function App() {
                     Tank overflow <Waves size={17} />
                   </div>
                   <p className="metric-number" data-testid="overflow">
-                    {format(totals.overflowL)} <span>L</span>
+                    {metricVolume(totals.overflowL)} <span>L</span>
                   </p>
                   <p className="metric-caption">Water beyond tank capacity</p>
                   <span className="metric-footnote">
@@ -716,14 +782,25 @@ export default function App() {
                       days={result.days}
                       capacity={scenario.tankCapacityL}
                       mode={chartMode}
+                      dates={dataset.dates}
                     />
                   </Suspense>
                 </div>
                 <div className="chart-footer">
                   <span>
                     <CloudRain size={14} />
-                    <strong>{format(totals.rainfallMm, 1)} mm</strong> synthetic
-                    rainfall
+                    <strong>{format(totals.rainfallMm, 1)} mm</strong>{" "}
+                    {historical ? (
+                      <a
+                        href="https://open-meteo.com/"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        ERA5 rain via Open-Meteo
+                      </a>
+                    ) : (
+                      "synthetic rainfall"
+                    )}
                   </span>
                   <span>
                     <span className="dashed-line" />{" "}
@@ -749,7 +826,9 @@ export default function App() {
                   <div>
                     <span>Initial + collected</span>
                     <strong>
-                      {format(scenario.initialStorageL + totals.incomingL, 1)}{" "}
+                      {balanceVolume(
+                        scenario.initialStorageL + totals.incomingL,
+                      )}{" "}
                       <small>L</small>
                     </strong>
                   </div>
@@ -757,21 +836,21 @@ export default function App() {
                   <div>
                     <span>Used</span>
                     <strong>
-                      {format(totals.usedL, 1)} <small>L</small>
+                      {balanceVolume(totals.usedL)} <small>L</small>
                     </strong>
                   </div>
                   <b>+</b>
                   <div>
                     <span>Overflow</span>
                     <strong>
-                      {format(totals.overflowL, 1)} <small>L</small>
+                      {balanceVolume(totals.overflowL)} <small>L</small>
                     </strong>
                   </div>
                   <b>+</b>
                   <div>
                     <span>Still stored</span>
                     <strong data-testid="final-storage">
-                      {format(totals.finalStorageL, 1)} <small>L</small>
+                      {balanceVolume(totals.finalStorageL)} <small>L</small>
                     </strong>
                   </div>
                 </div>
@@ -824,7 +903,9 @@ export default function App() {
                   {format(totals.unmetDemandL)} L still needed from another
                   source
                 </h3>
-                <p>Unmet non-potable demand across the 30 simulated days.</p>
+                <p>
+                  Unmet non-potable demand across {dayCount} simulated days.
+                </p>
               </div>
             </div>
             <div className="impact-caveat">
@@ -845,7 +926,7 @@ export default function App() {
               <p>One row. One day. A complete water balance.</p>
             </div>
             <span className="table-period">
-              30 DAYS <span>·</span> LITERS UNLESS NOTED
+              {dayCount} DAYS <span>·</span> LITERS UNLESS NOTED
             </span>
           </div>
           <div
@@ -856,12 +937,15 @@ export default function App() {
           >
             <table>
               <caption className="sr-only">
-                Deterministic synthetic daily results, rain before demand. All
-                water volumes in liters; rainfall in millimeters.
+                {historical
+                  ? "ERA5-based estimated daily results"
+                  : "Deterministic synthetic daily results"}
+                , rain before demand. All water volumes in liters; rainfall in
+                millimeters.
               </caption>
               <thead>
                 <tr>
-                  <th scope="col">Day</th>
+                  <th scope="col">{historical ? "Date" : "Day"}</th>
                   <th scope="col">
                     Rain <span>(mm)</span>
                   </th>
@@ -886,9 +970,13 @@ export default function App() {
                 </tr>
               </thead>
               <tbody>
-                {result.days.slice(0, showAllDays ? 30 : 7).map((day) => (
+                {result.days.slice(0, showAllDays ? dayCount : 7).map((day) => (
                   <tr key={day.day}>
-                    <th scope="row">{String(day.day).padStart(2, "0")}</th>
+                    <th scope="row">
+                      {historical
+                        ? historical.dates[day.day - 1]
+                        : String(day.day).padStart(2, "0")}
+                    </th>
                     <td>
                       <span
                         className={
@@ -917,7 +1005,7 @@ export default function App() {
             aria-expanded={showAllDays}
             onClick={() => setShowAllDays(!showAllDays)}
           >
-            {showAllDays ? "Show first 7 days" : "Explore all 30 days"}
+            {showAllDays ? "Show first 7 days" : `Explore all ${dayCount} days`}
             <ChevronDown
               size={14}
               style={{ transform: showAllDays ? "rotate(180deg)" : undefined }}
@@ -978,7 +1066,9 @@ export default function App() {
                 daily rainfall enters before that day's demand is served. This
                 model does not represent sub-daily timing, water quality,
                 first-flush events, evaporation, or plumbing design. Rainfall is
-                an authored synthetic sequence, not historical or live data.
+                {historical
+                  ? "ERA5 gridded reanalysis, not station-measured or live observations. See the source panel for provenance and daily aggregation limits."
+                  : "an authored synthetic sequence, not historical or live data."}
               </p>
             </div>
           </div>
@@ -993,12 +1083,12 @@ export default function App() {
           <p>Thoughtful water planning starts with a little curiosity.</p>
           <span>
             GREEN SHIFT HACKS 2026 <span className="footer-dot">·</span> BUILD
-            01
+            02
           </span>
         </div>
       </footer>
       <div className="sr-only" role="status">
-        {exported ? "Demo simulation results downloaded as CSV." : ""}
+        {exported ? "Simulation results downloaded as CSV." : ""}
       </div>
     </>
   );

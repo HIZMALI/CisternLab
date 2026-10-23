@@ -4,6 +4,7 @@ import {
   CartesianGrid,
   ComposedChart,
   Legend,
+  Line,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -21,11 +22,34 @@ export default function WaterChart({
   days,
   capacity,
   mode,
+  dates = null,
 }: {
   days: DailyResult[];
   capacity: number;
   mode: "storage" | "balance";
+  dates?: readonly string[] | null;
 }) {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const ticks = dates
+    ? dates.flatMap((date, i) =>
+        date.endsWith("-01") && Number(date.slice(5, 7)) % 2 === 1
+          ? [i + 1]
+          : [],
+      )
+    : [1, 5, 10, 15, 20, 25, 30];
   return (
     <ResponsiveContainer width="100%" height="100%" minWidth={0}>
       <ComposedChart
@@ -49,8 +73,12 @@ export default function WaterChart({
           axisLine={false}
           tickLine={false}
           tick={{ fontSize: 10, fill: "#626f57" }}
-          ticks={[1, 5, 10, 15, 20, 25, 30]}
-          tickFormatter={(v) => `D${v}`}
+          ticks={ticks}
+          tickFormatter={(v) =>
+            dates
+              ? months[Number(dates[Number(v) - 1]?.slice(5, 7)) - 1]
+              : `D${v}`
+          }
           dy={8}
         />
         <YAxis
@@ -69,7 +97,9 @@ export default function WaterChart({
             fontSize: 12,
             boxShadow: "0 5px 20px #243e3110",
           }}
-          labelFormatter={(v) => `Simulated day ${v}`}
+          labelFormatter={(v) =>
+            dates ? dates[Number(v) - 1] : `Simulated day ${v}`
+          }
           formatter={(v, name) => [`${format(Number(v), 2)} L`, name]}
         />
         <Legend
@@ -87,14 +117,25 @@ export default function WaterChart({
               stroke="#a6ae9e"
               strokeDasharray="5 5"
             />
-            <Bar
-              dataKey="usedL"
-              isAnimationActive={false}
-              name="Rainwater used"
-              fill="#cbd9b9"
-              radius={[2, 2, 0, 0]}
-              maxBarSize={13}
-            />
+            {dates ? (
+              <Line
+                dataKey="usedL"
+                name="Rainwater used"
+                stroke="#9daf83"
+                strokeWidth={1}
+                dot={false}
+                isAnimationActive={false}
+              />
+            ) : (
+              <Bar
+                dataKey="usedL"
+                isAnimationActive={false}
+                name="Rainwater used"
+                fill="#cbd9b9"
+                radius={[2, 2, 0, 0]}
+                maxBarSize={13}
+              />
+            )}
             <Area
               type="linear"
               dataKey="remainingStorageL"
@@ -105,6 +146,25 @@ export default function WaterChart({
               activeDot={{ r: 4 }}
               isAnimationActive={false}
             />
+          </>
+        ) : dates ? (
+          <>
+            {[
+              { key: "incomingL", name: "Incoming", color: "#8eaa79" },
+              { key: "usedL", name: "Used", color: "#3e6c52" },
+              { key: "overflowL", name: "Overflow", color: "#b27850" },
+              { key: "unmetDemandL", name: "Unmet demand", color: "#858779" },
+            ].map((series) => (
+              <Line
+                key={series.key}
+                dataKey={series.key}
+                name={series.name}
+                stroke={series.color}
+                strokeWidth={1.3}
+                dot={false}
+                isAnimationActive={false}
+              />
+            ))}
           </>
         ) : (
           <>
