@@ -75,7 +75,7 @@ for (const width of [1440, 768, 390, 320]) {
       })),
     ).toEqual([]);
     await page.screenshot({
-      path: `docs/screenshots/build-04-mocked-historical-${width}.png`,
+      path: `docs/screenshots/build-05-mocked-historical-${width}.png`,
       fullPage: true,
       animations: "disabled",
     });

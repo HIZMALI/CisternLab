@@ -83,7 +83,7 @@ for (const width of [1440, 768, 390, 320]) {
     await page.locator(".sizing-methodology > summary").click();
     await page.mouse.move(0, 0);
     await page.locator("#tank-sizing").screenshot({
-      path: `docs/screenshots/build-04-sizing-${width}.png`,
+      path: `docs/screenshots/build-05-sizing-${width}.png`,
       animations: "disabled",
     });
     expect(errors).toEqual([]);
@@ -279,7 +279,7 @@ test("historical active period is preserved during pending choices and sizing ne
   await expect(page.getByTestId("sizing-source")).toContainText("2024");
   expect(archiveCalls).toBe(2);
   await page.locator("#tank-sizing").screenshot({
-    path: "docs/screenshots/build-04-sizing-mocked-366-390.png",
+    path: "docs/screenshots/build-05-sizing-mocked-366-390.png",
     animations: "disabled",
   });
   await page

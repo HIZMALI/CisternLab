@@ -48,10 +48,12 @@ export default function HistoricalVariabilityLab({
   dataset,
   scenario,
   onChooseHistorical,
+  onComparisonLoaded,
 }: {
   dataset: RainfallDataset;
   scenario: Omit<SimulationInput, "rainfallMm">;
   onChooseHistorical: () => void;
+  onComparisonLoaded?: (data: HistoricalComparisonDataset) => void;
 }) {
   const [comparison, setComparison] =
     useState<HistoricalComparisonDataset | null>(null);
@@ -131,6 +133,7 @@ export default function HistoricalVariabilityLab({
       );
       if (request.isCurrent()) {
         setComparison(data);
+        onComparisonLoaded?.(data);
         setLoadState((previous) =>
           previous ? { ...previous, status: "success" } : previous,
         );

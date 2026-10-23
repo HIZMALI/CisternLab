@@ -1,0 +1,35 @@
+{
+  "classification": "BROWSER PRINT VERIFICATION — ARCHIVED ESTIMATES, NOT MEASURED SAVINGS",
+  "status": "passed",
+  "pdf": "output/pdf/build-05-evidence-brief.pdf",
+  "generatedBy": "Playwright Chromium page.pdf after selecting the archived reference example; application uses window.print, with no PDF generation dependency",
+  "pages": 4,
+  "tagged": true,
+  "mediaBoxPt": [
+    [0.0, 0.0, 594.95996, 841.91998],
+    [0.0, 0.0, 594.95996, 841.91998],
+    [0.0, 0.0, 594.95996, 841.91998],
+    [0.0, 0.0, 594.95996, 841.91998]
+  ],
+  "requiredTextChecksWhitespaceNormalized": {
+    "ONLYIF": true,
+    "120,687.2": true,
+    "rain_sum": true,
+    "SHA-256": true,
+    "CCBY4.0": true,
+    "2023": true,
+    "2024": true,
+    "2025": true,
+    "No harvesting": true,
+    "0 L independently": true
+  },
+  "visualInspection": "All four Poppler-rendered pages inspected. No clipping, overlaps, missing glyphs or broken tables observed. Methodology kept together; source records, units, attribution, limits and checksum present.",
+  "applicationNavigationPrinted": false,
+  "limitations": "Tagged output and semantic HTML are not a PDF/UA conformance certification. Browser print settings can change pagination and metadata.",
+  "screenshots": [
+    "docs/screenshots/build-05-print-page-1.png",
+    "docs/screenshots/build-05-print-page-2.png",
+    "docs/screenshots/build-05-print-page-3.png",
+    "docs/screenshots/build-05-print-page-4.png"
+  ]
+}

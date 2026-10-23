@@ -1,0 +1,90 @@
+{
+  "classification": "ARCHIVED EVIDENCE INTEGRITY CHECK — NOT A NEW LIVE REQUEST",
+  "baseline": "314e4efc8c325a642de5f1b38c683d0c1a80be4b",
+  "status": "passed",
+  "transformation": "Byte-for-byte browser asset copy. No rainfall/date/provenance transformation. Original precomputed result tables are ignored by production calculations.",
+  "expectedOriginalSha256": "2aee94b5a369acf8164bbb1e9d7265c8b89f5eba0a2a8719fe4a132c5e7197d7",
+  "files": [
+    {
+      "path": "docs/verification/build-04-live-20261023T192935527Z-snapshot.json",
+      "bytes": 78537,
+      "sha256": "2aee94b5a369acf8164bbb1e9d7265c8b89f5eba0a2a8719fe4a132c5e7197d7"
+    },
+    {
+      "path": "src/assets/archived-edirne.snapshot.json",
+      "bytes": 78537,
+      "sha256": "2aee94b5a369acf8164bbb1e9d7265c8b89f5eba0a2a8719fe4a132c5e7197d7"
+    },
+    {
+      "path": "dist/assets/archived-edirne.snapshot-MX1A3M1A.json",
+      "bytes": 78537,
+      "sha256": "2aee94b5a369acf8164bbb1e9d7265c8b89f5eba0a2a8719fe4a132c5e7197d7"
+    }
+  ],
+  "years": [
+    {
+      "year": 2023,
+      "dateCount": 365,
+      "rainCount": 365,
+      "firstDate": "2023-01-01",
+      "lastDate": "2023-12-31",
+      "dailySha256": "2ecbd32418705d28c56bf6f5ca47b588ab0a8603859356d5dc6d4c490280af0d",
+      "provider": "Open-Meteo",
+      "model": "ERA5",
+      "variable": "rain_sum",
+      "units": "mm",
+      "retrievedAt": "2026-10-23T19:29:37.494Z",
+      "requestedCoordinates": {
+        "latitude": 41.67719,
+        "longitude": 26.55597
+      },
+      "returnedCoordinates": {
+        "latitude": 41.75,
+        "longitude": 26.5
+      }
+    },
+    {
+      "year": 2024,
+      "dateCount": 366,
+      "rainCount": 366,
+      "firstDate": "2024-01-01",
+      "lastDate": "2024-12-31",
+      "dailySha256": "1045e7820b6ec6263e82101b9501361e0e2907857d45ff10ce40f504ba662475",
+      "provider": "Open-Meteo",
+      "model": "ERA5",
+      "variable": "rain_sum",
+      "units": "mm",
+      "retrievedAt": "2026-10-23T19:29:37.558Z",
+      "requestedCoordinates": {
+        "latitude": 41.67719,
+        "longitude": 26.55597
+      },
+      "returnedCoordinates": {
+        "latitude": 41.75,
+        "longitude": 26.5
+      }
+    },
+    {
+      "year": 2025,
+      "dateCount": 365,
+      "rainCount": 365,
+      "firstDate": "2025-01-01",
+      "lastDate": "2025-12-31",
+      "dailySha256": "88c7d37d3ddf43836e2ad1c001d4cdd7c01197b2c2be6e678f5455d2accbd532",
+      "provider": "Open-Meteo",
+      "model": "ERA5",
+      "variable": "rain_sum",
+      "units": "mm",
+      "retrievedAt": "2026-10-23T19:29:37.299Z",
+      "requestedCoordinates": {
+        "latitude": 41.67719,
+        "longitude": 26.55597
+      },
+      "returnedCoordinates": {
+        "latitude": 41.75,
+        "longitude": 26.5
+      }
+    }
+  ],
+  "validation": "Runtime SHA-256 plus existing complete-year and cross-year validators; genuine archive reproduction is separately covered by unit/browser tests."
+}

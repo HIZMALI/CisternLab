@@ -1,8 +1,8 @@
-# CisternLab · BUILD 04
+# CisternLab · BUILD 05
 
-**Every drop has a second life.** A local, transparent rooftop rainwater harvesting simulator for Green Shift Hacks 2026. Explore illustrative home, school, and small-facility scenarios using synthetic rainfall or a complete year of historical ERA5 reanalysis. Adjust inputs, inspect every simulated liter, and compare storage capacities in the **Tank Sizing & Decision Lab**. BUILD 04 adds an independent three-year Historical Variability Lab while preserving both verified engines and all previous workflows.
+**Every drop has a second life.** A local, transparent rooftop rainwater harvesting simulator for Green Shift Hacks 2026. Explore illustrative home, school, and small-facility scenarios using synthetic rainfall or a complete year of historical ERA5 reanalysis. Adjust inputs, inspect every simulated liter, and compare storage capacities in the **Tank Sizing & Decision Lab**. BUILD 05 adds an Environmental Impact & Evidence Studio, a verified archived Edirne example and a printable evidence brief while preserving all established engines and workflows.
 
-Choose **DEMO DATA — SYNTHETIC** (offline-ready authored examples) or **HISTORICAL REANALYSIS — ERA5** (modeled climate data from Open-Meteo). All simulation and sizing outputs remain **ESTIMATED RESULTS**, not measured savings or site observations. No backend, account, API key, paid API, database, tracker, or deployment is involved. Fonts are bundled locally. BUILD 05 is not started.
+Choose **DEMO DATA — SYNTHETIC** (offline-ready authored examples) or **HISTORICAL REANALYSIS — ERA5** (modeled climate data from Open-Meteo). All simulation and sizing outputs remain **ESTIMATED RESULTS**, not measured savings or site observations. No backend, account, API key, paid API, database, tracker, or deployment is involved. Fonts are bundled locally. BUILD 06 is not started.
 
 ## Run locally
 
@@ -180,6 +180,50 @@ npm run verify:historical-live
 
 This uses the actual browser UI and public endpoints once for Edirne, 2023–2025, on an owned preview at port 4319. Dated metadata/response-hash records and an original reproducibility snapshot are saved under `docs/verification/build-04-live-*`. A failure is recorded honestly without automatic retries. BUILD 02 live records are preserved. See the BUILD 04 report for the actual observed outcome.
 
+## Impact & Evidence Studio · BUILD 05
+
+Choose **Impact & Evidence** in navigation. The studio explains the environmental problem, source evidence, a capacity decision, its conditional resource benefit and the limits of that claim. It reuses `simulation.ts`, `tankSizing.ts` and `variability.ts` unchanged; `impactEvidence.ts` maps their outputs into a shared screen/copy/print data model without recreating water-balance equations.
+
+Three explicit modes are available:
+
+- **Use active dashboard data**: the active 30-day synthetic sequence or validated single historical year, with current dashboard physical inputs. Pending source selections never enter this analysis.
+- **Explore Archived Edirne Example**: three original complete ERA5 years with separate editable reference inputs (120 m², efficiency 0.80, 250 L/day, current 2,000 L). It never overwrites the dashboard's scenario or location.
+- **Use loaded three-year comparison**: an explicit handoff from a successfully validated Historical Variability Lab result. Its original location stays visible even when dashboard source selection changes.
+
+### Conditional impact and the no-harvesting baseline
+
+**Potential freshwater displacement equals modeled rainwater delivered to non-potable demand ONLY IF every delivered liter replaces an otherwise used liter of freshwater.** It is a conditional estimate, not measured savings, an observed municipal-consumption change, carbon reduction or financial benefit. Unused ending storage is excluded; it has not yet served demand. Comparative evidence always starts at **0 L independently in every period**, leaving dashboard initial storage unchanged.
+
+The hypothetical no-harvesting baseline uses the existing zero-capacity simulation with zero initial storage, identical roof/rain/efficiency and unchanged demand. It delivers 0 L and leaves the entire demand unmet. Positive capacities are compared with that baseline, the current tank, the original recommended tested capacity and a selected standard alternative. A current-only capacity never changes the recommendation pool. All existing yield targets/rules remain unchanged; the studio's default is 90%.
+
+`impactEvidence.ts` derives displacement L from supplied L, m³ as L / 1000, remaining freshwater requirement from unmet demand, and coverage from supplied / demand. The latter is undefined when demand is zero. Shortage counts/streaks follow BUILD 04's any-positive-unmet definition. Signed additional supply is compared minus current/baseline; reduction in unmet demand is current/baseline minus compared; coverage changes are **percentage points**. Tank-overflow differences are not verified runoff, drainage-network or flood-risk reductions.
+
+Three-year totals are explicitly **sums of independent annual outputs**, not annual figures or a concatenated tank simulation. Demand totals account for 2024's 366 days; weighted overall coverage uses total used / total demand, not an average of annual percentages. The longest streak is the maximum within any year, never a cross-year run. Sum of independent year-end stocks is not counted as displacement. Every large result identifies units, period, dataset and estimated status.
+
+### Archived Edirne provenance and offline behavior
+
+The preserved BUILD 04 file is `docs/verification/build-04-live-20261023T192935527Z-snapshot.json`. Its original SHA-256 is **`2aee94b5a369acf8164bbb1e9d7265c8b89f5eba0a2a8719fe4a132c5e7197d7`**. `src/assets/archived-edirne.snapshot.json` is a **byte-for-byte copy** with the same checksum, not a replacement or fabricated weather fixture. The original evidence is unchanged. Vite serves the copy as a separate hashed asset (78,537 bytes, about 8.6 kB gzip), outside the initial JavaScript bundle. Its original saved result tables are ignored: every displayed result is recalculated from its raw rainfall.
+
+A deferred local-asset warmup runs after the studio module loads. SHA-256, snapshot schema and existing complete-year/metadata validators must pass before the UI reports **Archive verified**. The record preserves Edirne ID 747712, 2023/2024/2025, all **1,096 original dates and rain values**, Open-Meteo, ERA5, rain_sum, mm, original 23 October 2026 retrieval timestamps, requested city coordinates **41.67719, 26.55597**, returned grid **41.75, 26.5**, original URLs, Europe/Istanbul and fixed UTC offset 10,800 s. The exact classification is **ARCHIVED HISTORICAL REANALYSIS — ERA5**; it is a preserved capture, not a new live request or station-measured rainfall.
+
+After **Archive verified** appears and application/chart assets have loaded, archive selection and recalculation work with the browser fully offline in the same open page. No Open-Meteo request is made for the example. First access still needs the local application assets. A full offline reload/first-ever offline load is not promised; there is no service worker or PWA app-shell cache. Missing, malformed or corrupted local assets show an error and manual retry; active analysis stays available. No fake archive or synthetic fallback is substituted. **Download original archived snapshot** retains the exact original bytes, even after switching modes.
+
+Reference reproduction with the unchanged engines yields current-2,000 L annual supplies **39,030.8 / 41,299.2 / 34,261.6 L** and coverage **42.77 / 45.14 / 37.55%**. The three-year 90% comparison capacity is **3,000 L**. At 3,000 L, annual supplies are **40,995.6 / 43,547.6 / 36,144 L**: a three-year sum of **120,687.2 L (120.6872 m³)** under the substitution assumption. These are conditional modeled examples for assumed inputs, not measured savings at an Edirne property. Reference figures appear only in tests/documentation; production results come from raw rain.
+
+### Judge walkthrough, copy and print
+
+**Explore the Evidence** has four manually advanced stages: THE PROBLEM → THE DATA → THE DECISION → THE IMPACT. Its separate archived reference case never changes the selected studio analysis. Next/Back/Exit are native keyboard-operable buttons, stage headings receive focus, and exiting restores launch focus. No modal trap or automatic advancing is used; changing stage does not rerun simulations.
+
+**Copy Key Findings** writes the selected analysis's identity, period, inputs, units, target, decisions, annual/totals and caveats. If clipboard access fails, a copyable text summary remains available. **Print / Save Evidence Brief** invokes browser printing, with a separate semantic print layout containing scenario, annual baseline/current/selected/recommended results, signed changes, methodology, provenance, checksum, license and limitations. Navigation and the rest of the app are excluded. Chromium's verified four-page A4 evidence capture is in `output/pdf/build-05-evidence-brief.pdf`; actual Save as PDF metadata and pagination depend on the user's browser. No PDF library was added. A screen preview is also available.
+
+### Reproduce and verify
+
+Retain the original JSON and recorded inputs/target/capacity. `readArchivedBytes(bytes)` verifies the original digest and calls `validateArchivedSnapshot`; pass its `.comparison` to `comparisonImpactSource(data, true)`, then `evaluateImpactEvidence(source, inputs)`, `currentImpactMetrics(evaluation)` and `buildImpactView(evaluation, current, target, selectedCapacityL)`. `evidenceBriefData` and `impactKeyFindings` consume this same view. Synthetic/active historical modes use `activeImpactSource(dataset)` instead. Full computation precision is retained; presentation rounds only. Source retrieval metadata remains original.
+
+Run all commands in Run locally above, plus `git diff --check`. Unit tests include the genuine archived case separately from explicitly authored mock fixtures; browser tests intercept weather APIs and verify fully offline archive use, corruption/retry, copies, walkthrough and browser print output. See `BUILD_05_REPORT.md` for final totals and screenshot evidence. `docs/HACKATHON_PRESENTATION_DRAFT.md` provides a concise English pitch and four-step storyboard; it is not a submission or published site.
+
+General context: EPA describes [capturing rain for reuse](https://www.epa.gov/green-infrastructure/environmental-benefits-green-infrastructure) and [non-potable rainwater use in drought preparation](https://www.epa.gov/green-infrastructure/prepare-drought). [Open-Meteo historical documentation](https://open-meteo.com/en/docs/historical-weather-api) and [licensing](https://open-meteo.com/en/licence) explain data and attribution. These sources support the general context and methodology; they do not independently verify CisternLab's calculated outcomes. Real implementation depends on physical installation, water quality, actual use and relevant regulations. Previous scientific references remain accessible in the earlier labs.
+
 ## Deterministic model and equations
 
 The pure engine is in `src/engine/simulation.ts`. It has no clock, random source, network, browser state, or hidden default. Identical inputs produce identical results. Inputs are validated before calculation, are never mutated, and results keep JavaScript floating-point precision. Display rounding does not feed the engine.
@@ -265,7 +309,7 @@ These quantities describe a modeled scenario. They are not measured savings, pro
 
 ## Architecture and verification
 
-React, strict TypeScript, Vite, Tailwind CSS, Lucide, and Recharts. No additional dependencies were needed for BUILDs 02, 03 or 04. Vitest preserves all original engine/data tests and adds pure sizing, threshold, marginal, no-benefit, fractional, fairness, provenance, spreadsheet-safety, and conservation tests. Playwright retains the original workflows and adds sizing/reactivity/export/keyboard tests and accessibility scans. Historical requests are mocked in deterministic tests. See `BUILD_01_REPORT.md`, `BUILD_02_REPORT.md`, `BUILD_03_REPORT.md`, and `BUILD_04_REPORT.md` for verification and screenshots.
+React, strict TypeScript, Vite, Tailwind CSS, Lucide, and Recharts. No additional dependencies were needed for BUILDs 02–05. Vitest preserves all original engine/data tests and adds pure sizing, threshold, marginal, no-benefit, fractional, fairness, provenance, spreadsheet-safety, and conservation tests. Playwright retains the original workflows and adds sizing/reactivity/export/keyboard tests and accessibility scans. Historical requests are mocked in deterministic tests. See `BUILD_01_REPORT.md`, `BUILD_02_REPORT.md`, `BUILD_03_REPORT.md`, `BUILD_04_REPORT.md`, and `BUILD_05_REPORT.md` for verification and screenshots.
 
 `src/engine/simulation.ts` is unchanged from BUILD 01 and independent of React. `src/data/` separates authored demos, typed dataset metadata, and the API adapter/client. `RainfallSource` owns pending selections and loading; `App` keeps the active validated dataset and scenario. Only the rainfall series enters the existing engine. No provenance, timestamp, networking, or source selection affects the mathematical model.
 
@@ -285,4 +329,4 @@ React, strict TypeScript, Vite, Tailwind CSS, Lucide, and Recharts. No additiona
 
 Run locally, select Historical Reanalysis, search and explicitly select the desired city, select 2023/2024/2025, and press Load rainfall data. Inspect the active period/provenance, set all five scenario controls, and download CSV. Keep that file with its retrieval timestamp and source URL; roof/tank inputs and original daily rainfall are sufficient to reproduce the same deterministic simulation without fetching again. Identical rainfall and scenario inputs yield identical outputs. API responses themselves may change, so a future download of the same URL is not a pinned snapshot.
 
-BUILD 04 stops at verified historical sensitivity comparisons. No deployment, long-term optimization, financial payback, CO₂ estimates, purchasing, installation design, or BUILD 05 work is included.
+BUILD 05 stops at verified impact evidence and presentation preparation. No deployment, submission, video, financial payback, CO₂ estimates, forecasting, purchasing, installation design or BUILD 06 work is included.

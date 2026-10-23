@@ -6,3 +6,5 @@ coverage/
 package-lock.json
 # Preserve original downloaded reproducibility snapshots and their recorded SHA-256 bytes.
 docs/verification/*-snapshot.json
+# Preserve the byte-for-byte browser copy of the verified original archive.
+src/assets/*.snapshot.json

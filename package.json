@@ -1,8 +1,8 @@
 {
   "name": "cisternlab",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
-  "description": "Transparent rainwater simulation, tank sizing and Historical Variability Lab — Green Shift Hacks 2026, BUILD 04",
+  "description": "Transparent rainwater simulation and Environmental Impact Evidence Studio — Green Shift Hacks 2026, BUILD 05",
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",

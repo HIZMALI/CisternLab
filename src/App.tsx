@@ -27,7 +27,12 @@ import type { SimulationInput } from "./engine/simulation";
 import { resultsToCsv } from "./engine/csv";
 import RainfallSource from "./components/RainfallSource";
 import { syntheticDataset } from "./data/rainfall";
+import type { HistoricalComparisonDataset } from "./data/historicalComparison";
 import type { HistoricalDataset, SourceMode } from "./data/rainfall";
+
+const ImpactEvidenceStudio = lazy(
+  () => import("./components/ImpactEvidenceStudio"),
+);
 
 const HistoricalVariabilityLab = lazy(
   () => import("./components/HistoricalVariabilityLab"),
@@ -309,6 +314,8 @@ function RoofIllustration({
 }
 
 export default function App() {
+  const [impactComparison, setImpactComparison] =
+    useState<HistoricalComparisonDataset | null>(null);
   const [scenario, setScenario] = useState<Scenario>({ ...DEFAULT_SCENARIO });
   const [place, setPlace] = useState<Place>("Home");
   const [datasetIndex, setDatasetIndex] = useState(0);
@@ -404,7 +411,7 @@ export default function App() {
               <Droplet size={21} strokeWidth={1.7} />
             </span>
             Cistern<span className="brand-light">Lab</span>
-            <span className="build-badge">BUILD 04</span>
+            <span className="build-badge">BUILD 05</span>
           </a>
           <nav
             className={menuOpen ? "nav open" : "nav"}
@@ -428,6 +435,9 @@ export default function App() {
               onClick={() => setMenuOpen(false)}
             >
               Historical Variability Lab
+            </a>
+            <a href="#impact-evidence" onClick={() => setMenuOpen(false)}>
+              Impact &amp; Evidence
             </a>
             <a href="#methodology" onClick={() => setMenuOpen(false)}>
               Methodology <ArrowUpRight size={13} />
@@ -1044,6 +1054,7 @@ export default function App() {
           }
         >
           <HistoricalVariabilityLab
+            onComparisonLoaded={setImpactComparison}
             dataset={dataset}
             scenario={scenario}
             onChooseHistorical={() => {
@@ -1053,6 +1064,16 @@ export default function App() {
                 document.getElementById("location-search")?.focus(),
               );
             }}
+          />
+        </Suspense>
+
+        <Suspense
+          fallback={<p className="chart-loading">Loading impact studio…</p>}
+        >
+          <ImpactEvidenceStudio
+            dataset={dataset}
+            scenario={scenario}
+            comparison={impactComparison}
           />
         </Suspense>
 
