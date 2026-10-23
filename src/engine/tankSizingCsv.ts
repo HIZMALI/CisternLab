@@ -45,7 +45,7 @@ export function tankSizingToCsv(
   const decision = recommendCapacity(evaluation, targetPercent);
   const rows: (string | number)[][] = [
     [
-      "CisternLab BUILD 03 — Tank Sizing & Decision Lab",
+      "CisternLab — Tank Sizing & Decision Lab",
       dataset.classification,
       "ESTIMATED RESULT",
     ],

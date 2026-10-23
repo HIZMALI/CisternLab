@@ -527,11 +527,11 @@ for (const width of [1440, 768, 390, 320]) {
     await lab(page).locator(".variability-candidates > summary").click();
     await page.mouse.move(0, 0);
     await lab(page).screenshot({
-      path: `docs/screenshots/build-06-local-variability-mocked-${width}.png`,
+      path: `test-results/screenshots/variability-mocked-${width}.png`,
       animations: "disabled",
     });
     await page.screenshot({
-      path: `docs/screenshots/build-06-local-page-mocked-${width}.png`,
+      path: `test-results/screenshots/page-mocked-${width}.png`,
       fullPage: true,
       animations: "disabled",
     });

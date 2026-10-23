@@ -16,7 +16,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "verify:historical-live": "node scripts/verify-historical-live.mjs",
-    "audit:public": "node scripts/audit-public.mjs"
+    "verify:production": "node scripts/verify-release.mjs https://hizmali.github.io/CisternLab/"
   },
   "keywords": [],
   "author": "",

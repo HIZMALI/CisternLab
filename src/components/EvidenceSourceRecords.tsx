@@ -14,10 +14,9 @@ export default function EvidenceSourceRecords({
       </p>
       {source.mode === "archive" && (
         <p>
-          Preserved during BUILD 04 · retrieval date: 23 October 2026 · no new
-          live request. Original file: {ARCHIVE_ORIGINAL_PATH}. Browser delivery
-          is a byte-for-byte copy; original calculated result tables are
-          ignored.
+          Archived retrieval date: 23 October 2026 · no new live request.
+          Original file: {ARCHIVE_ORIGINAL_PATH}. Browser delivery is a
+          byte-for-byte copy; original calculated result tables are ignored.
         </p>
       )}
       {source.datasets.map((d, i) => (

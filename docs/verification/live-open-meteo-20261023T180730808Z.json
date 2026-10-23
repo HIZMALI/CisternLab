@@ -1,8 +1,0 @@
-{
-  "kind": "LIVE SERVICE VERIFICATION — NOT MOCKED",
-  "verifiedAt": "2026-10-23T18:07:30.808Z",
-  "status": "failed",
-  "documentation": "https://open-meteo.com/en/docs/historical-weather-api",
-  "attribution": "Weather data by Open-Meteo; ERA5 / Copernicus C3S. API data CC BY 4.0. Simulation is a CisternLab transformation, not measured savings or provider endorsement.",
-  "error": "page.waitForResponse: Timeout 22000ms exceeded while waiting for event \"response\""
-}

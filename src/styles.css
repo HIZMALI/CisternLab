@@ -124,19 +124,6 @@ h3 {
   place-items: center;
   margin-right: 9px;
 }
-.build-badge {
-  font-family: "DM Sans Variable", sans-serif;
-  letter-spacing: 1px;
-  font-size: 8px;
-  font-weight: 600;
-  margin-left: 11px;
-  padding: 4px 6px;
-  background: #ebeee5;
-  border: 1px solid #dce2d3;
-  border-radius: 4px;
-  color: #626f57;
-  white-space: nowrap;
-}
 .nav {
   display: flex;
   align-items: center;
@@ -1257,9 +1244,6 @@ tbody tr:hover {
   letter-spacing: 0.7px;
   color: #626f57;
 }
-.footer-dot {
-  padding-inline: 7px;
-}
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1756,10 +1740,6 @@ tbody tr:hover {
   }
   .brand {
     font-size: 23px;
-  }
-  .build-badge {
-    font-size: 7px;
-    margin-left: 10px;
   }
   .brand-icon {
     height: 31px;
@@ -2261,9 +2241,6 @@ tbody tr:hover {
     font-size: 6px;
     text-align: left;
   }
-  .footer-dot {
-    padding-inline: 5px;
-  }
 }
 @media (max-width: 350px) {
   .container {
@@ -2271,10 +2248,6 @@ tbody tr:hover {
   }
   .brand {
     font-size: 21px;
-  }
-  .build-badge {
-    font-size: 6px;
-    margin-left: 7px;
   }
   .brand-icon {
     width: 29px;
@@ -2588,7 +2561,7 @@ tbody tr:hover {
   }
 }
 
-/* BUILD 02: source selection extends the established paper-and-sage visual system. */
+/* Rainfall source selection. */
 .rainfall-source {
   margin-bottom: 24px;
   overflow: hidden;
@@ -3124,7 +3097,7 @@ tbody tr:hover {
   color: #485b39 !important;
 }
 
-/* BUILD 03: a decision lab within the existing paper-and-sage system. */
+/* Tank sizing and capacity comparison. */
 .sizing-lab {
   padding-top: 43px;
   margin-top: 7px;
@@ -4399,7 +4372,7 @@ tbody tr:hover {
   }
 }
 
-/* BUILD 05 — impact evidence, archived mode and print brief */
+/* Impact evidence, archived mode and print brief. */
 .impact-studio {
   padding: 45px 0;
   scroll-margin-top: 85px;

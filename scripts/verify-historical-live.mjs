@@ -19,7 +19,7 @@ const server = spawn(
   { windowsHide: true, stdio: "pipe" },
 );
 const evidence = {
-  kind: "LIVE SERVICE VERIFICATION — NOT MOCKED — BUILD 04",
+  kind: "LIVE SERVICE VERIFICATION — NOT MOCKED",
   verifiedAt: new Date().toISOString(),
   status: "failed",
   phase: "owned preview startup",
@@ -197,14 +197,14 @@ try {
     lab.locator(".variability-chart .recharts-surface"),
   ).toBeVisible();
   await page.evaluate(() => globalThis.document.fonts.ready);
-  await mkdir("docs/screenshots", { recursive: true });
+  await mkdir("artifacts/screenshots", { recursive: true });
   await lab.screenshot({
-    path: "docs/screenshots/build-04-live-edirne-1440.png",
+    path: "artifacts/screenshots/historical-live-edirne-1440.png",
     animations: "disabled",
   });
   await page.setViewportSize({ width: 390, height: 844 });
   await lab.screenshot({
-    path: "docs/screenshots/build-04-live-edirne-390.png",
+    path: "artifacts/screenshots/historical-live-edirne-390.png",
     animations: "disabled",
   });
   if (evidence.browserErrors.length)
@@ -224,9 +224,9 @@ try {
 } finally {
   await browser?.close();
   server.kill();
-  await mkdir("docs/verification", { recursive: true });
+  await mkdir("artifacts/verification", { recursive: true });
   const stamp = evidence.verifiedAt.replace(/[^0-9TZ]/g, "");
-  const path = `docs/verification/build-04-live-${stamp}`;
+  const path = `artifacts/verification/historical-live-${stamp}`;
   await writeFile(`${path}.json`, JSON.stringify(evidence, null, 2) + "\n");
   if (snapshot) await writeFile(`${path}-snapshot.json`, snapshot);
   console.log(

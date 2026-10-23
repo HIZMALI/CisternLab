@@ -15,7 +15,7 @@ import {
   impactKeyFindings,
 } from "../engine/impactEvidence";
 
-// Actual recorded BUILD 04 response. Distinct from authored/mocked transport fixtures.
+// Actual recorded ERA5 response. Distinct from authored/mocked transport fixtures.
 const original = readFileSync(ARCHIVE_ORIGINAL_PATH),
   snapshot = JSON.parse(original.toString("utf8"));
 it("verifies the documented original digest and identical browser-copy bytes", () => {

@@ -9,7 +9,7 @@ if (!base || !base.endsWith("/CisternLab/"))
   throw new Error("Supply the full production URL ending /CisternLab/.");
 const isPublic = new URL(base).protocol === "https:";
 const label = isPublic ? "public" : "subpath";
-const prefix = `build-06-${label}`;
+const prefix = `production-${label}`;
 const evidence = {
   kind: isPublic
     ? "ACTUAL PUBLIC HTTPS BROWSER — NO MOCKS"
@@ -25,9 +25,9 @@ const evidence = {
   viewports: [],
   liveWeather: { status: "not requested for local verification" },
 };
-await mkdir("docs/verification", { recursive: true });
-await mkdir("docs/screenshots", { recursive: true });
-await mkdir("output/pdf", { recursive: true });
+await mkdir("artifacts/verification", { recursive: true });
+await mkdir("artifacts/screenshots", { recursive: true });
+await mkdir("artifacts/pdf", { recursive: true });
 const browser = await chromium.launch();
 const context = await browser.newContext({
   viewport: { width: 1440, height: 1000 },
@@ -75,6 +75,7 @@ const csvRecord = (file) => ({
 });
 try {
   expect((await page.goto(base)).status()).toBe(200);
+  await expect(page.getByText(/BUILD\s+\d+/)).toHaveCount(0);
   await expect(page.getByTestId("water-used")).toHaveText("7,250 L");
   await expect(studio.getByText(/Archive verified: 1,096/)).toBeVisible();
   await studio
@@ -277,11 +278,11 @@ try {
     await studio.locator(".impact-provenance > summary").click();
     await studio.locator(".impact-methodology > summary").click();
     await studio.screenshot({
-      path: `docs/screenshots/${prefix}-impact-${width}.png`,
+      path: `artifacts/screenshots/${prefix}-impact-${width}.png`,
       animations: "disabled",
     });
     await studio.locator(".impact-annual-cards").screenshot({
-      path: `docs/screenshots/${prefix}-cards-${width}.png`,
+      path: `artifacts/screenshots/${prefix}-cards-${width}.png`,
       animations: "disabled",
     });
   }
@@ -315,7 +316,7 @@ try {
     "2025",
   ])
     await expect(brief).toContainText(text);
-  const pdfPath = `output/pdf/${prefix}-evidence-brief.pdf`;
+  const pdfPath = `artifacts/pdf/${prefix}-evidence-brief.pdf`;
   await page.pdf({
     path: pdfPath,
     preferCSSPageSize: true,
@@ -476,7 +477,7 @@ try {
         ),
       );
       await lab.screenshot({
-        path: `docs/screenshots/${prefix}-live-edirne.png`,
+        path: `artifacts/screenshots/${prefix}-live-edirne.png`,
         animations: "disabled",
       });
       const before = weatherRequests.length;
@@ -533,7 +534,7 @@ try {
 } finally {
   evidence.weatherRequests = weatherRequests;
   await browser.close();
-  const path = `docs/verification/${prefix}.json`;
+  const path = `artifacts/verification/${prefix}.json`;
   await writeFile(path, JSON.stringify(evidence, null, 2) + "\n");
   console.log(
     JSON.stringify(

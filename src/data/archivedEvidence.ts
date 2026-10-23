@@ -6,7 +6,7 @@ import { ANALYSIS_SCHEMA_VERSION } from "../engine/variabilityExport";
 export const ARCHIVE_SHA256 =
   "2aee94b5a369acf8164bbb1e9d7265c8b89f5eba0a2a8719fe4a132c5e7197d7";
 export const ARCHIVE_ORIGINAL_PATH =
-  "docs/verification/build-04-live-20261023T192935527Z-snapshot.json";
+  "docs/data/edirne-era5-2023-2025.snapshot.json";
 export const ARCHIVE_CLASSIFICATION = "ARCHIVED HISTORICAL REANALYSIS — ERA5";
 export interface ArchivedEvidence {
   readonly comparison: HistoricalComparisonDataset;
@@ -81,7 +81,7 @@ export async function readArchivedBytes(
   ).join("");
   if (sha256 !== ARCHIVE_SHA256)
     throw new Error(
-      "Archived evidence integrity check failed: SHA-256 does not match the original BUILD 04 snapshot. No archived result was calculated.",
+      "Archived evidence integrity check failed: SHA-256 does not match the original archived snapshot. No archived result was calculated.",
     );
   let payload: unknown;
   const originalText = new TextDecoder("utf-8", { fatal: true }).decode(bytes);

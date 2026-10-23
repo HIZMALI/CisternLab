@@ -23,11 +23,7 @@ export function resultsToCsv(
   const rows: (string | number)[][] = [
     ...(historical
       ? [
-          [
-            "CisternLab BUILD 02",
-            historical.classification,
-            "ESTIMATED RESULT",
-          ],
+          ["CisternLab", historical.classification, "ESTIMATED RESULT"],
           ["Provider", historical.provider, "Weather model", historical.model],
           [
             "Location",
@@ -86,7 +82,7 @@ export function resultsToCsv(
           ],
         ]
       : [
-          ["CisternLab BUILD 02", "DEMO DATA", "ESTIMATED RESULT"],
+          ["CisternLab", "DEMO DATA", "ESTIMATED RESULT"],
           [
             "Dataset",
             datasetName,

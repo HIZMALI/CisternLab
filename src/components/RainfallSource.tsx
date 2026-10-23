@@ -122,7 +122,7 @@ export function DatasetSummary({ dataset }: { dataset: RainfallDataset }) {
           </dd>
           <dt>Retrieved (UTC)</dt>
           <dd>
-            {dataset.retrievedAt ?? "Not applicable — authored in BUILD 01"}
+            {dataset.retrievedAt ?? "Not applicable — authored synthetic data"}
           </dd>
           <dt>Validation</dt>
           <dd>

@@ -411,7 +411,6 @@ export default function App() {
               <Droplet size={21} strokeWidth={1.7} />
             </span>
             Cistern<span className="brand-light">Lab</span>
-            <span className="build-badge">BUILD 06</span>
           </a>
           <nav
             className={menuOpen ? "nav open" : "nav"}
@@ -1145,10 +1144,7 @@ export default function App() {
             <span className="brand-light">Lab</span>
           </a>
           <p>Thoughtful water planning starts with a little curiosity.</p>
-          <span>
-            GREEN SHIFT HACKS 2026 <span className="footer-dot">·</span> BUILD
-            03
-          </span>
+          <span>GREEN SHIFT HACKS 2026</span>
         </div>
       </footer>
       <div className="sr-only" role="status">

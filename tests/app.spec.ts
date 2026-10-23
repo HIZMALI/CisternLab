@@ -12,6 +12,7 @@ for (const width of [1440, 768, 390, 320]) {
     });
     await page.setViewportSize({ width, height: width < 500 ? 844 : 1000 });
     await page.goto("./");
+    await expect(page.getByText(/BUILD\s+\d+/)).toHaveCount(0);
     await page.evaluate(() => document.fonts.ready);
     await expect(
       page.getByRole("heading", { name: /Every drop has/ }),
@@ -50,13 +51,13 @@ for (const width of [1440, 768, 390, 320]) {
       })),
     ).toEqual([]);
     await page.screenshot({
-      path: `docs/screenshots/build-06-local-synthetic-${width}.png`,
+      path: `test-results/screenshots/synthetic-${width}.png`,
       fullPage: true,
       animations: "disabled",
     });
     if (width === 390) {
       await page.locator(".results-column").screenshot({
-        path: "docs/screenshots/build-06-local-synthetic-390-results.png",
+        path: "test-results/screenshots/synthetic-390-results.png",
         animations: "disabled",
       });
     }

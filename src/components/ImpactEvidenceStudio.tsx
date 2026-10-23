@@ -191,7 +191,7 @@ export default function ImpactEvidenceStudio({
     );
     const link = document.createElement("a");
     link.href = url;
-    link.download = "cisternlab-original-edirne-build-04-snapshot.json";
+    link.download = "cisternlab-edirne-era5-2023-2025.snapshot.json";
     link.click();
     URL.revokeObjectURL(url);
   }
@@ -363,7 +363,7 @@ export default function ImpactEvidenceStudio({
                 </a>
                 .{" "}
                 {mode === "archive"
-                  ? "Preserved BUILD 04 capture, 23 October 2026; not a new live request."
+                  ? "Archived capture, 23 October 2026; not a new live request."
                   : "Historical reanalysis, not station measurements."}
               </p>
             )}

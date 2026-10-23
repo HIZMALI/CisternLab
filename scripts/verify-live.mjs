@@ -163,21 +163,21 @@ try {
     overflow: await page.getByTestId("overflow").innerText(),
     finalStorage: await page.getByTestId("final-storage").innerText(),
   };
-  await mkdir("docs/screenshots", { recursive: true });
+  await mkdir("artifacts/screenshots", { recursive: true });
   await page.screenshot({
-    path: "docs/screenshots/build-02-live-edirne-1440.png",
+    path: "artifacts/screenshots/live-edirne-1440.png",
     fullPage: true,
     animations: "disabled",
   });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.mouse.move(0, 0);
   await page.screenshot({
-    path: "docs/screenshots/build-02-live-edirne-390.png",
+    path: "artifacts/screenshots/live-edirne-390.png",
     fullPage: true,
     animations: "disabled",
   });
   await page.locator(".results-column").screenshot({
-    path: "docs/screenshots/build-02-live-edirne-results.png",
+    path: "artifacts/screenshots/live-edirne-results.png",
     animations: "disabled",
   });
   evidence.browserErrors = errors;
@@ -199,14 +199,14 @@ try {
 } finally {
   await browser?.close();
   server.kill();
-  await mkdir("docs/verification", { recursive: true });
+  await mkdir("artifacts/verification", { recursive: true });
   await writeFile(
-    "docs/verification/live-open-meteo.json",
+    "artifacts/verification/live-open-meteo.json",
     `${JSON.stringify(evidence, null, 2)}\n`,
   );
   const stamp = evidence.verifiedAt.replace(/[^0-9TZ]/g, "");
   await writeFile(
-    `docs/verification/live-open-meteo-${stamp}.json`,
+    `artifacts/verification/live-open-meteo-${stamp}.json`,
     `${JSON.stringify(evidence, null, 2)}\n`,
   );
 }

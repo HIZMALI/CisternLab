@@ -96,8 +96,8 @@ export default function JudgeWalkthrough({
             <>
               <p>
                 <strong>ARCHIVED HISTORICAL REANALYSIS — ERA5</strong> · Edirne,
-                Türkiye · Open-Meteo · rain_sum in mm · captured 23 October 2026
-                during BUILD 04, not a new live request or station measurements.
+                Türkiye · Open-Meteo · rain_sum in mm · captured 23 October
+                2026, not a new live request or station measurements.
               </p>
               <ul>
                 {archive!.comparison.years.map((d) => (

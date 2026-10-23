@@ -8,7 +8,7 @@ Weather data by [Open-Meteo](https://open-meteo.com/), using [ERA5 / Copernicus 
 
 Open-Meteo API data is provided under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); retain attribution, the license link and notice of transformations. See the provider's [licensing information](https://open-meteo.com/en/licence), [historical API documentation](https://open-meteo.com/en/docs/historical-weather-api) and [service terms](https://open-meteo.com/en/terms). Free public API use is non-commercial; the code's MIT license does not grant commercial access to that service.
 
-The archived Edirne JSON preserves the original downloaded daily rainfall and its provenance. CisternLab transforms rainfall into estimated daily tank balances, capacity comparisons and conditional freshwater displacement. These outputs are not measured site savings, station observations, or provider-endorsed results. The archived SHA-256 and complete original requests remain in the application, exports and build reports.
+The archived Edirne JSON preserves the original downloaded daily rainfall and its provenance. CisternLab transforms rainfall into estimated daily tank balances, capacity comparisons and conditional freshwater displacement. These outputs are not measured site savings, station observations, or provider-endorsed results. The archived SHA-256 and complete original requests remain in the application, exports and [data provenance guide](docs/DATA_PROVENANCE.md).
 
 ## Bundled software and fonts
 

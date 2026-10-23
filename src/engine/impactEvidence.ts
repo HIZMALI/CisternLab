@@ -352,7 +352,7 @@ export function impactKeyFindings(
     "Tank overflow differences are modeled tank balances, not verified runoff or flood-risk reductions.",
     IMPACT_LIMITS,
     source.archiveSha256
-      ? `Original archive SHA-256: ${source.archiveSha256}. Weather: Open-Meteo / ERA5 / Copernicus, CC BY 4.0; preserved BUILD 04 capture, not a new live request.`
+      ? `Original archive SHA-256: ${source.archiveSha256}. Weather: Open-Meteo / ERA5 / Copernicus, CC BY 4.0; archived capture, not a new live request.`
       : `Original dated rainfall, source provenance and inputs are available through the existing daily/sizing/historical exports; synthetic data is not historical observation.`,
   ].join("\n\n");
 }

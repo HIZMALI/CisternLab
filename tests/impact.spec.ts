@@ -177,9 +177,7 @@ test("shows complete archive source records, original hash, classification and d
     bytes = await readFile((await download.path())!);
   expect(
     bytes.equals(
-      await readFile(
-        "docs/verification/build-04-live-20261023T192935527Z-snapshot.json",
-      ),
+      await readFile("docs/data/edirne-era5-2023-2025.snapshot.json"),
     ),
   ).toBe(true);
   await expect(studio(page).locator(".impact-conditional")).toContainText(
@@ -409,7 +407,7 @@ test("browser print exposes only a complete evidence brief and generates readabl
     await expect(brief).toContainText(text);
   await page.evaluate(() => document.fonts.ready);
   await page.pdf({
-    path: "output/pdf/build-06-local-evidence-brief.pdf",
+    path: "test-results/evidence/impact-brief.pdf",
     preferCSSPageSize: true,
     tagged: true,
     outline: true,
@@ -479,13 +477,13 @@ for (const width of [1440, 768, 390, 320]) {
     await studio(page).locator(".impact-methodology > summary").click();
     await page.mouse.move(0, 0);
     await studio(page).screenshot({
-      path: `docs/screenshots/build-06-local-impact-archive-${width}.png`,
+      path: `test-results/screenshots/impact-archive-${width}.png`,
       animations: "disabled",
     });
     await studio(page)
       .locator(".impact-annual-cards")
       .screenshot({
-        path: `docs/screenshots/build-06-local-impact-cards-${width}.png`,
+        path: `test-results/screenshots/impact-cards-${width}.png`,
         animations: "disabled",
       });
     expect(errors).toEqual([]);

@@ -169,8 +169,8 @@ export default function EvidenceBrief({
           Reproduce with the recorded original daily rainfall, physical inputs,
           selected capacity, target and empty starts, using the unchanged
           simulation, sizing and variability engines. Retain the original JSON
-          or existing CSV/JSON downloads alongside this brief. See README.md and
-          BUILD_05_REPORT.md for the pure-function reproduction procedure.
+          or existing CSV/JSON downloads alongside this brief. See
+          docs/DATA_PROVENANCE.md for the reproduction procedure.
         </p>
         <EvidenceSourceRecords source={data.source} />
       </section>
