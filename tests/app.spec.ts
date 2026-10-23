@@ -41,7 +41,7 @@ for (const width of [1440, 768, 390, 320]) {
       expect(box!.x + box!.width).toBeLessThanOrEqual(width);
     }
     const accessibility = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
       .analyze();
     expect(
       accessibility.violations.map((v) => ({
@@ -50,13 +50,13 @@ for (const width of [1440, 768, 390, 320]) {
       })),
     ).toEqual([]);
     await page.screenshot({
-      path: `docs/screenshots/build-02-synthetic-${width}.png`,
+      path: `docs/screenshots/build-03-synthetic-${width}.png`,
       fullPage: true,
       animations: "disabled",
     });
     if (width === 390) {
       await page.locator(".results-column").screenshot({
-        path: "docs/screenshots/build-02-synthetic-390-results.png",
+        path: "docs/screenshots/build-03-synthetic-390-results.png",
         animations: "disabled",
       });
     }
@@ -85,11 +85,11 @@ test("inputs, datasets, chart views, daily table and reset update immediately", 
     page.getByRole("button", { name: "Daily balance", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByRole("img", { name: /Daily incoming/ })).toBeVisible();
-  await expect(page.locator("tbody tr")).toHaveCount(7);
+  await expect(page.locator(".daily-panel tbody tr")).toHaveCount(7);
   await page.getByRole("button", { name: "Explore all 30 days" }).click();
-  await expect(page.locator("tbody tr")).toHaveCount(30);
+  await expect(page.locator(".daily-panel tbody tr")).toHaveCount(30);
   await page.getByRole("button", { name: "Show first 7 days" }).click();
-  await expect(page.locator("tbody tr")).toHaveCount(7);
+  await expect(page.locator(".daily-panel tbody tr")).toHaveCount(7);
   await page.getByRole("button", { name: "School", exact: true }).click();
   await expect(page.getByLabel("Roof area", { exact: true })).toHaveValue(
     "600",

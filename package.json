@@ -1,8 +1,8 @@
 {
   "name": "cisternlab",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "Transparent rooftop rainwater planning with ERA5 historical rainfall — Green Shift Hacks 2026, BUILD 02",
+  "description": "Transparent rainwater simulation and Tank Sizing Decision Lab — Green Shift Hacks 2026, BUILD 03",
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",

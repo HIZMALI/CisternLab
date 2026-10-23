@@ -29,6 +29,8 @@ import RainfallSource from "./components/RainfallSource";
 import { syntheticDataset } from "./data/rainfall";
 import type { HistoricalDataset, SourceMode } from "./data/rainfall";
 
+const TankSizingLab = lazy(() => import("./components/TankSizingLab"));
+
 const WaterChart = lazy(() => import("./components/WaterChart"));
 
 const format = (value: number, decimals = 0) =>
@@ -393,12 +395,12 @@ export default function App() {
       </a>
       <header className="site-header">
         <div className="container header-inner">
-          <a href="#overview" className="brand" aria-label="CisternLab home">
+          <a href="#overview" className="brand">
             <span className="brand-icon">
               <Droplet size={21} strokeWidth={1.7} />
             </span>
             Cistern<span className="brand-light">Lab</span>
-            <span className="build-badge">BUILD 02</span>
+            <span className="build-badge">BUILD 03</span>
           </a>
           <nav
             className={menuOpen ? "nav open" : "nav"}
@@ -413,6 +415,9 @@ export default function App() {
               onClick={() => setMenuOpen(false)}
             >
               Simulator
+            </a>
+            <a href="#tank-sizing" onClick={() => setMenuOpen(false)}>
+              Tank Sizing
             </a>
             <a href="#methodology" onClick={() => setMenuOpen(false)}>
               Methodology <ArrowUpRight size={13} />
@@ -1013,6 +1018,16 @@ export default function App() {
           </button>
         </section>
 
+        <Suspense
+          fallback={
+            <div id="tank-sizing" className="chart-loading" role="status">
+              Loading Tank Sizing Lab…
+            </div>
+          }
+        >
+          <TankSizingLab dataset={dataset} scenario={scenario} />
+        </Suspense>
+
         <section
           id="methodology"
           className="methodology-section"
@@ -1083,7 +1098,7 @@ export default function App() {
           <p>Thoughtful water planning starts with a little curiosity.</p>
           <span>
             GREEN SHIFT HACKS 2026 <span className="footer-dot">·</span> BUILD
-            02
+            03
           </span>
         </div>
       </footer>

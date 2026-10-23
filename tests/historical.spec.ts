@@ -66,7 +66,7 @@ for (const width of [1440, 768, 390, 320]) {
       ),
     ).toBe(true);
     const a11y = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
       .analyze();
     expect(
       a11y.violations.map((v) => ({
@@ -75,7 +75,7 @@ for (const width of [1440, 768, 390, 320]) {
       })),
     ).toEqual([]);
     await page.screenshot({
-      path: `docs/screenshots/build-02-mocked-historical-${width}.png`,
+      path: `docs/screenshots/build-03-mocked-historical-${width}.png`,
       fullPage: true,
       animations: "disabled",
     });
@@ -120,7 +120,7 @@ test("switches sources, years and locations explicitly; caches only validated co
     .click();
   await expect(page.getByText("Your 366-day outlook")).toBeVisible();
   await page.getByRole("button", { name: "Explore all 366 days" }).click();
-  await expect(page.locator("tbody tr")).toHaveCount(366);
+  await expect(page.locator(".daily-panel tbody tr")).toHaveCount(366);
   await expect(
     page.getByRole("rowheader", { name: "2024-02-29" }),
   ).toBeVisible();

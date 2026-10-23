@@ -1,8 +1,8 @@
-# CisternLab · BUILD 02
+# CisternLab · BUILD 03
 
-**Every drop has a second life.** A local, transparent rooftop rainwater harvesting simulator for Green Shift Hacks 2026. Explore illustrative home, school, and small-facility scenarios using synthetic rainfall or a complete year of historical ERA5 reanalysis. Adjust inputs and inspect every simulated liter. BUILD 02 extends the verified BUILD 01 application and preserves its pure engine and original design.
+**Every drop has a second life.** A local, transparent rooftop rainwater harvesting simulator for Green Shift Hacks 2026. Explore illustrative home, school, and small-facility scenarios using synthetic rainfall or a complete year of historical ERA5 reanalysis. Adjust inputs, inspect every simulated liter, and compare storage capacities in the **Tank Sizing & Decision Lab**. BUILD 03 preserves the verified simulation, data integration, and original visual design.
 
-Choose **DEMO DATA — SYNTHETIC** (offline-ready authored examples) or **HISTORICAL REANALYSIS — ERA5** (modeled climate data from Open-Meteo). All simulation outputs remain **ESTIMATED RESULTS**, not measured savings or site observations. No backend, account, API key, paid API, database, tracker, or deployment is involved. Fonts are bundled locally. BUILD 03 is not started.
+Choose **DEMO DATA — SYNTHETIC** (offline-ready authored examples) or **HISTORICAL REANALYSIS — ERA5** (modeled climate data from Open-Meteo). All simulation and sizing outputs remain **ESTIMATED RESULTS**, not measured savings or site observations. No backend, account, API key, paid API, database, tracker, or deployment is involved. Fonts are bundled locally. BUILD 04 is not started.
 
 ## Run locally
 
@@ -20,6 +20,7 @@ npm run typecheck
 npm run lint
 npm test
 npm run build
+npm run format:check
 npx playwright install chromium
 npm run test:e2e
 ```
@@ -46,6 +47,79 @@ This starts an owned local production preview on port 4318, searches Edirne, Tü
 - CSV download with input values, units, synthetic provenance, model assumptions, and unrounded daily records.
 - Historical CSV exports also contain full ISO daily dates, original rainfall, model/provider, location and requested/returned coordinates, year/range, timezone/offset, retrieval timestamp, reproducible URL, validation status, attribution/license links, and the conditional impact disclaimer. Synthetic exports retain the original 30-row daily format and column order.
 - UI bounds: roof 0–2,000 m², tank 0–20,000 L, demand 0–3,000 L/day, efficiency 0–100%, storage 0–capacity. The engine supports finite nonnegative volumes beyond UI bounds when derived calculations remain representable. Invalid input drafts keep the last valid simulation and display an associated error. Reducing capacity clamps initial storage, visibly, to the new capacity.
+- Tank Sizing navigation, local capacity-versus-supply comparison, adjustable supply targets, a recommendation explanation, candidate and current-versus-recommended tables, marginal-yield analysis, and a separate provenance-rich sizing CSV. It does not change dashboard inputs.
+
+## Tank Sizing & Decision Lab
+
+Select **Tank Sizing** in the navigation. The lab uses only the **active validated dataset** from the dashboard, never an uncommitted city or year choice. All candidates share the same roof, collection efficiency, fixed daily demand, rainfall, and actual period. Sizing makes no network calls.
+
+The standard analysis capacities, in liters, are exactly:
+
+```text
+0, 250, 500, 1000, 2000, 3000, 5000, 7500, 10000, 15000, 20000
+```
+
+These are analysis candidates, not verified commercial product sizes, prices, or installation recommendations. Zero liters is the no-storage baseline. The current dashboard capacity is also evaluated. A non-standard current capacity is inserted in ascending order for comparison, without changing the standard recommendation pool, its maximum supply, or its standard-neighbor marginal chain. Standard/current duplicates are evaluated once.
+
+### Empty starts and period boundaries
+
+**Every sizing candidate starts with 0 L.** This prevents a larger tank from gaining extra starting water. The dashboard's own initial-storage control and behavior are unchanged. With nonzero dashboard storage, a visible note explains why sizing and dashboard results can differ; current-versus-recommended columns both use the same empty start.
+
+The lab labels the actual period: **30-day synthetic scenario**, **365-day historical reanalysis scenario**, or **366-day historical reanalysis scenario**. Synthetic examples are not extrapolated to a year. Historical comparisons start empty on January 1 with **no carryover from the preceding calendar year**. They are not multiyear climate optima or long-term guarantees.
+
+### Explainable recommendation
+
+The default target is **90%**, adjustable to **80%, 90%, 95%, or 98%**. For each capacity, the lab calls the unchanged `simulate` function in `src/engine/simulation.ts`; there is no second hydrological model.
+
+```text
+maxSupply = maximum modeled water used among the TESTED STANDARD capacities
+targetSupply = selectedTarget / 100 × maxSupply
+recommended = smallest standard capacity with modeled supply ≥ targetSupply
+```
+
+The product calls this **Recommended tested capacity**. The maximum is only among tested standard candidates, not a proven global physical maximum. The target is **our transparent user-adjustable decision heuristic**, not a scientifically mandated universal optimum, product purchase recommendation, or financial optimum. A discrete tested capacity may exceed the target substantially.
+
+Capacities are validated, deduplicated, and sorted ascending, with the smallest capacity breaking equal-yield ties. Comparisons allow `1e-10 × maxSupply` liters of floating-point tolerance. There is no absolute tolerance floor that could let a zero-capacity tank pass a tiny positive target. If every standard capacity delivers zero, no tank is recommended; the UI explains zero demand, roof area, efficiency, rainfall, or no usable supply as applicable. Neither supply-target achievement nor demand percentages divide by zero.
+
+### Metrics, marginal benefits, and the current tank
+
+Each candidate reports modeled water supplied, volumetric demand coverage, overflow, unmet demand, final storage, fully supplied days, and period length. **Volumetric coverage** is `used / total demand`; **daily reliability** is `fully supplied days / total days`. Both percentages are undefined when demand is zero. Zero-demand day tallies are not displayed as misleading 100% reliability.
+
+For adjacent **standard** capacities:
+
+```text
+additionalSupply = largerSupply − smallerSupply
+additionalCapacity = largerCapacity − smallerCapacity
+incrementalYieldPer1000L = additionalSupply / additionalCapacity × 1000
+```
+
+The last metric means **liters of additional modeled water delivered per 1,000 L of extra storage over the selected simulation period**. It is not a financial return. Zero improvements are retained; no rule forces individual gains to decrease monotonically. The comparison table states each standard predecessor. A current-only capacity has no standard marginal increment.
+
+The current-versus-recommended table shows signed `recommended − current` changes in capacity, supply, demand coverage (percentage points), overflow, and unmet demand. A smaller recommended capacity can supply less water, and negative changes are shown accurately. When both capacities match, the lab explicitly says the current tank is already the recommended standard candidate. No suggested capacity is applied to the dashboard automatically.
+
+The chart distinguishes current and recommended capacities, shows the supply target, and has an equivalent accessible table. Connecting tested points does not evaluate untested capacities. Recommendation rationale and all numeric results are available without hovering.
+
+### Sizing export and reproducibility
+
+**Export sizing CSV** is separate from the existing daily export; `src/engine/csv.ts` remains unchanged. The sizing CSV includes dataset classification/provider/model, location and requested/returned coordinates, year/date range/day count, timezone metadata, retrieval time/source URL/validation, attribution, physical inputs, empty-start assumptions, standard and extra current capacities, all candidate metrics and marginal values, target, decision rule and recommendation, and estimated-versus-measured limitations. It also includes the original unrounded rainfall snapshot so the analysis can be reproduced without another download. Text cells use the established formula-prefix protection and CSV escaping.
+
+To reproduce, load/select a dataset, set roof/demand/efficiency/current tank, open the lab, choose a target, and export. All sizing starts are zero regardless of dashboard storage. Reusing the exported rainfall and physical inputs with the recorded candidate set reproduces the decision.
+
+The pure sizing engine in `src/engine/tankSizing.ts` has no React, clock, randomness, or networking. React memoizes standard evaluations using only rainfall/roof/efficiency/demand. A threshold change only selects among existing results; a non-standard current capacity adds only its own simulation.
+
+### Verified example and scientific background
+
+The independent test fixture uses roof 1 m², rainfall `[10, 0, 10]` mm, efficiency 1, demand 5 L/day, and zero starting storage. Capacities `[0, 5, 10, 20]` L deliver `[0, 10, 15, 15]` L. Maximum tested supply is 15 L; the 90% target is 13.5 L, so the recommendation is 10 L. This fixture is checked directly against the original simulation engine.
+
+For the unmodified default 30-day mixed demo, maximum standard tested supply is 7,250 L, the 90% target is 6,525 L, and the recommended tested capacity is **1,000 L**, delivering 7,250 L (100% of the tested maximum). The dashboard's separate 2,000 L default still shows **7,250 L used, 5,650 L overflow, and 1,500 L ending storage**. Sizing does not overwrite those settings.
+
+Background references for storage assessment and daily water-balance comparison:
+
+- [U.S. Department of Energy — Rainwater Harvesting Systems Technology Review](https://www.energy.gov/cmei/femp/rainwater-harvesting-systems-technology-review).
+- Imteaz, Ahsan & Shanableh (2013), [Reliability analysis of rainwater tanks using daily water balance model: Variations within a large city](https://doi.org/10.1016/j.resconrec.2013.05.006).
+- Santos & Taveira-Pinto (2013), [Analysis of different criteria to size rainwater storage tanks using detailed methods](https://doi.org/10.1016/j.resconrec.2012.11.004).
+
+These references motivate transparent tank comparison; **they do not establish CisternLab's exact 90% rule as a universal optimum**. This lab is model-based decision support, not certified engineering design, physical installation design, drinking-water advice, a drought-proof guarantee, or measured savings.
 
 ## Deterministic model and equations
 
@@ -132,14 +206,15 @@ These quantities describe a modeled scenario. They are not measured savings, pro
 
 ## Architecture and verification
 
-React, strict TypeScript, Vite, Tailwind CSS, Lucide, and Recharts. No additional dependencies were needed for BUILD 02. Vitest preserves all original engine tests and adds adapter, cancellation, cache, schema, leap-year, failure, export, and historical-fixture conservation tests. Playwright preserves original smoke checks and adds intercepted historical workflows and accessibility scans in both modes. See `BUILD_01_REPORT.md` for the baseline and `BUILD_02_REPORT.md` for current verification and screenshots.
+React, strict TypeScript, Vite, Tailwind CSS, Lucide, and Recharts. No additional dependencies were needed for BUILDs 02 or 03. Vitest preserves all original engine/data tests and adds pure sizing, threshold, marginal, no-benefit, fractional, fairness, provenance, spreadsheet-safety, and conservation tests. Playwright retains the original workflows and adds sizing/reactivity/export/keyboard tests and accessibility scans. Historical requests are mocked in deterministic tests. See `BUILD_01_REPORT.md`, `BUILD_02_REPORT.md`, and `BUILD_03_REPORT.md` for verification and screenshots.
 
 `src/engine/simulation.ts` is unchanged from BUILD 01 and independent of React. `src/data/` separates authored demos, typed dataset metadata, and the API adapter/client. `RainfallSource` owns pending selections and loading; `App` keeps the active validated dataset and scenario. Only the rainfall series enters the existing engine. No provenance, timestamp, networking, or source selection affects the mathematical model.
 
 ## Current limitations
 
 - A daily rain-before-demand approximation can overstate overflow or understate usable water relative to a finer time-step model.
-- Synthetic periods are 30 days; historical analyses are one complete allowed calendar year, with fixed daily demand. No rainfall editor, optimization, multiyear comparison, saved scenarios, or scenario database.
+- Synthetic periods are 30 days; historical analyses are one complete allowed calendar year, with fixed daily demand. Sizing uses a finite candidate set and a water-yield heuristic. There is no rainfall editor, multiyear optimization/comparison, saved scenario, or database.
+- Every sizing run starts empty with no preceding-period carryover. Recommendation thresholds and tank candidates are transparent project choices, not certified design standards, verified products, uncertainty estimates, or financial/carbon optimization.
 - No physical design, structural suitability, water quality, filtration, first flush, pump electricity, costs, or carbon factors.
 - Rounded table and balance values can show tiny apparent discrepancies; calculations and CSV retain full precision.
 - Browser automation covers Chromium, with visual review at the four requested sizes. Other browsers and assistive technology require further human testing; automated axe checks do not establish full accessibility conformance.
@@ -151,4 +226,4 @@ React, strict TypeScript, Vite, Tailwind CSS, Lucide, and Recharts. No additiona
 
 Run locally, select Historical Reanalysis, search and explicitly select the desired city, select 2023/2024/2025, and press Load rainfall data. Inspect the active period/provenance, set all five scenario controls, and download CSV. Keep that file with its retrieval timestamp and source URL; roof/tank inputs and original daily rainfall are sufficient to reproduce the same deterministic simulation without fetching again. Identical rainfall and scenario inputs yield identical outputs. API responses themselves may change, so a future download of the same URL is not a pinned snapshot.
 
-BUILD 02 stops at historical integration and verification. No deployment, optimization, financial/CO₂ estimates, multiyear comparison, or BUILD 03 work is included.
+BUILD 03 stops at tank-capacity comparison and verification. No deployment, multiyear optimization, financial payback, CO₂ estimates, tank purchasing, installation design, or BUILD 04 work is included.
