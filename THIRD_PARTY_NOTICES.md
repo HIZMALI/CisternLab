@@ -18,4 +18,6 @@ The archived Edirne JSON preserves the original downloaded daily rainfall and it
 - DM Sans and Space Grotesk, bundled through Fontsource: SIL Open Font License 1.1. Their original copyright and license texts are preserved in [DM Sans OFL](public/licenses/DM-Sans-OFL.txt) and [Space Grotesk OFL](public/licenses/Space-Grotesk-OFL.txt) and ship in the deployed `licenses/` directory.
 - Build and test dependencies retain their respective package licenses. `package-lock.json` records exact package versions and published license identifiers; installed package license files provide the full texts.
 
+[Production software notices](public/licenses/THIRD-PARTY-SOFTWARE.txt) reproduce 47 original license/notice files from the 47 installed production packages. This text also ships in the site's `licenses/` directory.
+
 No third-party logo, stock image or claim of affiliation is introduced.

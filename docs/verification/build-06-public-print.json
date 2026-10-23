@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "url": "https://hizmali.github.io/CisternLab/",
+  "pdf": "output/pdf/build-06-public-evidence-brief.pdf",
+  "pages": 4,
+  "tagged": true,
+  "mediaBoxPt": [
+    [0.0, 0.0, 594.95996, 841.91998],
+    [0.0, 0.0, 594.95996, 841.91998],
+    [0.0, 0.0, 594.95996, 841.91998],
+    [0.0, 0.0, 594.95996, 841.91998]
+  ],
+  "requiredTextChecksWhitespaceNormalized": {
+    "ONLY IF": true,
+    "120,687.2": true,
+    "rain_sum": true,
+    "SHA-256": true,
+    "CC BY 4.0": true,
+    "2023": true,
+    "2024": true,
+    "2025": true,
+    "No harvesting": true,
+    "0 L independently": true
+  },
+  "actualPrintEvent": "Real window.print invoked from application button; beforeprint observed",
+  "navigationPrinted": false,
+  "visualInspection": "All four Poppler-rendered public pages inspected; no clipping, overlap, missing glyphs or unexpected blanks observed.",
+  "limitations": "Browser settings may change pagination; tagged output is not PDF/UA certification."
+}

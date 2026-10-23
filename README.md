@@ -1,8 +1,22 @@
 # CisternLab · BUILD 06
 
+**[Open the verified live application](https://hizmali.github.io/CisternLab/)** · [Public GitHub repository](https://github.com/HIZMALI/CisternLab) · [CI and deployment](https://github.com/HIZMALI/CisternLab/actions/workflows/deploy.yml)
+
 **Every drop has a second life.** A transparent rooftop rainwater harvesting simulator for Green Shift Hacks 2026. Explore illustrative home, school, and small-facility scenarios using synthetic rainfall or a complete year of historical ERA5 reanalysis. Adjust inputs, inspect every simulated liter, and compare storage capacities in the **Tank Sizing & Decision Lab**. BUILD 05 adds an Environmental Impact & Evidence Studio, a verified archived Edirne example and a printable evidence brief while preserving all established engines and workflows.
 
-Choose **DEMO DATA — SYNTHETIC** (offline-ready authored examples) or **HISTORICAL REANALYSIS — ERA5** (modeled climate data from Open-Meteo). All simulation and sizing outputs remain **ESTIMATED RESULTS**, not measured savings or site observations. The application has no backend, account, API key, paid API, database or tracker. Fonts are bundled locally. BUILD 06 prepares GitHub Pages publication and verifies the actual production subpath; release evidence is recorded separately from deterministic tests.
+Choose **DEMO DATA — SYNTHETIC** (offline-ready authored examples) or **HISTORICAL REANALYSIS — ERA5** (modeled climate data from Open-Meteo). All simulation and sizing outputs remain **ESTIMATED RESULTS**, not measured savings or site observations. The application has no backend, account, API key, paid API, database or tracker. Fonts are bundled locally. BUILD 06 publishes to GitHub Pages with gated CI. The actual HTTPS application, archived integrity, real-service browser CORS, four responsive widths and four-page print brief were verified on 23 October 2026; see [the release report](BUILD_06_REPORT.md).
+
+## Try the public demo
+
+Schools, households and small facilities can compare rain timing, storage and non-potable demand before considering a physical installation. Rain falling on a roof is not automatically useful supply: bursts may overflow a tank while later demand goes unmet.
+
+1. Start with the 30-day synthetic simulator. Change a physical input and inspect the daily balance and complete table.
+2. Open **Tank Sizing** to compare tested capacities using the adjustable relative-yield heuristic. Export the calculation and source record.
+3. Open **Impact & Evidence**, wait for **Archive verified**, then **Explore Archived Edirne Example**. Explore the three independent years, baseline/current/recommended comparisons and complete provenance without contacting a weather API.
+4. Complete the four-stage evidence walkthrough, **Copy Key Findings**, and **Print / Save Evidence Brief**. The verified Chromium A4 capture has four pages. Displacement remains conditional on one-for-one freshwater substitution, not measured savings.
+5. For a fresh source, select **Historical Reanalysis** in Simulator, search Edirne, explicitly choose Türkiye/ID 747712 and load a complete year. Then open **Historical Variability Lab → Load three-year comparison**, export reproducibility JSON and choose **Use loaded three-year comparison** in Impact & Evidence. Service failures are shown explicitly; the archived demo remains available.
+
+Follow the [production demo checklist](docs/PRODUCTION_DEMO_CHECKLIST.md) for details, accessibility checks and limitations. [Public release links and evidence](docs/DEVPOST_RELEASE_LINKS.md) are ready for a future submission; no Devpost submission or video is claimed.
 
 ## Run locally
 
@@ -341,4 +355,6 @@ For a fork, change the build/preview `base` in `vite.config.ts`, the Playwright 
 
 `npm run audit:public` performs a read-only pattern audit of reachable history and tracked files without printing matched secrets. It supplements manual review; it cannot prove the absence of every possible secret. Do not publish a discovered historical credential without remediation.
 
-Use the [production demo checklist](docs/PRODUCTION_DEMO_CHECKLIST.md) for the main user journey. [Release links](docs/DEVPOST_RELEASE_LINKS.md) and [BUILD 06 report](BUILD_06_REPORT.md) will record actual public status and verification evidence.
+Use the [production demo checklist](docs/PRODUCTION_DEMO_CHECKLIST.md) for the main user journey. [Release links](docs/DEVPOST_RELEASE_LINKS.md) and [BUILD 06 report](BUILD_06_REPORT.md) record actual public status and verification evidence. Local verification used 242 unit and 68 browser tests; the first Linux deployment passed the same totals. Live service checks are separate from intercepted deterministic tests.
+
+To repeat the optional actual-site browser check after installing Chromium, run `node scripts/verify-release.mjs https://hizmali.github.io/CisternLab/`. It opens the real site, generates evidence and contacts the public non-commercial APIs without intercepted responses. The local equivalent is `node scripts/verify-release.mjs http://127.0.0.1:4173/CisternLab/` with an owned production preview running. It verifies assets, archive bytes, UI results, keyboard/copy/exports/print and four-width axe scans; public mode additionally verifies real weather and deliberate offline-error recovery. Format generated verification JSON before committing. Browser-generated PDF pagination also needs independent inspection.

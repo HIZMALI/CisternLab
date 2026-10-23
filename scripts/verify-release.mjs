@@ -280,6 +280,10 @@ try {
       path: `docs/screenshots/${prefix}-impact-${width}.png`,
       animations: "disabled",
     });
+    await studio.locator(".impact-annual-cards").screenshot({
+      path: `docs/screenshots/${prefix}-cards-${width}.png`,
+      animations: "disabled",
+    });
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.evaluate(() =>
@@ -359,6 +363,7 @@ try {
   expect(evidence.pageErrors).toEqual([]);
   expect(evidence.consoleErrors).toEqual([]);
   expect(evidence.failedRequests).toEqual([]);
+  evidence.coreStatus = "passed";
   evidence.status = "passed";
   if (isPublic) {
     phase = "live weather";
@@ -481,7 +486,7 @@ try {
       ).toBeVisible();
       expect(weatherRequests.length).toBe(before);
       live.scenarioEditsMakeNoWeatherRequests = true;
-      live.status = "passed";
+      live.apiFlowStatus = "passed";
       phase = "intentional offline error";
       await context.setOffline(true);
       await page.getByLabel("Search city worldwide").fill("Bodrum");
@@ -502,10 +507,24 @@ try {
       ).toBeVisible({ timeout: 22000 });
       live.manualError.recovery =
         "Explicit repeated city search after reconnect succeeded; no automatic retry";
+      expect(evidence.pageErrors).toEqual([]);
+      expect(
+        evidence.consoleErrors.filter(
+          (e) => e.phase !== "intentional offline error",
+        ),
+      ).toEqual([]);
+      expect(
+        evidence.failedRequests.filter(
+          (e) => e.phase !== "intentional offline error",
+        ),
+      ).toEqual([]);
+      live.status = "passed";
     } catch (error) {
       await context.setOffline(false);
       live.error = error.message;
       live.uiErrors = await page.locator(".data-error").allTextContents();
+      evidence.status = "failed";
+      process.exitCode = 1;
     }
   }
 } catch (error) {
