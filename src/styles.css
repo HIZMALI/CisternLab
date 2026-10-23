@@ -3939,3 +3939,462 @@ tbody tr:hover {
     font-size: 9px;
   }
 }
+
+/* Historical sensitivity lab: independent annual views in the existing visual system. */
+.variability-lab {
+  padding: 45px 0;
+  scroll-margin-top: 85px;
+}
+.variability-lab h3 {
+  font-size: 17px;
+  font-weight: 600;
+}
+.variability-lab p {
+  line-height: 1.85;
+}
+.variability-lab > .panel,
+.variability-lab > .sizing-decision-grid,
+.annual-cards {
+  margin-bottom: 22px;
+}
+.variability-loader,
+.variability-context,
+.variability-ranges,
+.variability-shortages,
+.variability-candidates,
+.variability-exports {
+  padding: 27px;
+}
+.variability-source-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 17px;
+}
+.variability-source-heading > svg {
+  flex-shrink: 0;
+  color: #34593e;
+  margin-top: 3px;
+}
+.variability-source-heading p,
+.variability-status,
+.variability-context > p,
+.variability-loader p,
+.variability-ranges > p,
+.variability-shortages > p,
+.variability-candidates > p,
+.variability-exports p {
+  font-size: 12px;
+  color: #53614f;
+  margin-top: 9px;
+}
+.variability-load-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 21px;
+}
+.variability-load-actions > span {
+  font-size: 10px;
+  color: #58634f;
+}
+.variability-load-actions .primary-button {
+  background: #284e3c;
+  color: white;
+  border: 0;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 7px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.variability-load-actions .primary-button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+.year-progress {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0;
+  margin-top: 22px;
+}
+.year-progress li {
+  border: 1px solid #dfe4d7;
+  border-radius: 7px;
+  padding: 13px 15px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.year-progress li[data-state="validated"] {
+  background: #f0f5e8;
+}
+.year-progress li[data-state="error"] {
+  background: #fff1e9;
+}
+.year-progress strong {
+  font-family: "Space Grotesk Variable", sans-serif;
+  font-size: 18px;
+}
+.year-progress span {
+  font-size: 10px;
+  text-transform: capitalize;
+  line-height: 1.6;
+}
+.variability-context h3 {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  margin-top: 12px;
+}
+.variability-context h3 svg {
+  flex-shrink: 0;
+}
+.variability-context .sizing-start-note {
+  margin-bottom: 16px;
+}
+.variability-provenance {
+  margin-top: 18px;
+  font-size: 12px;
+}
+.variability-provenance summary,
+.variability-candidates summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.variability-provenance > div {
+  padding: 20px 0;
+  border-bottom: 1px solid #e4e7db;
+}
+.variability-provenance h4 {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.variability-provenance dl {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 9px;
+  font-size: 11px;
+}
+.variability-provenance dd {
+  overflow-wrap: anywhere;
+}
+.variability-provenance dt {
+  color: #58634f;
+}
+.annual-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.annual-card {
+  padding: 24px;
+  border-top: 3px solid #284e3c;
+}
+.annual-card.year-1 {
+  border-top-color: #956422;
+}
+.annual-card.year-2 {
+  border-top-color: #5965a1;
+}
+.annual-card-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.annual-card-title h3 {
+  font-family: "Space Grotesk Variable", sans-serif;
+  font-size: 24px;
+}
+.annual-card-title span {
+  font-size: 9px;
+  color: #58634f;
+}
+.annual-supply {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 20px 0;
+}
+.annual-supply strong {
+  font-family: "Space Grotesk Variable", sans-serif;
+  font-size: 31px;
+  font-weight: 500;
+}
+.annual-supply span {
+  font-size: 11px;
+  color: #53614f;
+}
+.annual-card dl {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  font-size: 11px;
+  gap: 10px;
+}
+.annual-card dd {
+  text-align: right;
+  font-weight: 500;
+}
+.annual-card > p {
+  font-size: 9px;
+  color: #58634f;
+  border-top: 1px solid #e4e7db;
+  margin-top: 20px;
+  padding-top: 13px;
+}
+.annual-decisions {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0;
+}
+.annual-decisions li {
+  display: grid;
+  grid-template-columns: 45px minmax(0, 1fr);
+  gap: 4px 12px;
+  margin: 12px 0;
+  font-size: 13px;
+}
+.annual-decisions small {
+  grid-column: 2;
+  font-size: 10px;
+  color: #58634f;
+}
+.variability-range-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+  margin: 22px 0;
+}
+.variability-range-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.variability-range-grid span {
+  font-size: 11px;
+  color: #53614f;
+}
+.variability-range-grid strong {
+  font-size: 21px;
+  font-family: "Space Grotesk Variable", sans-serif;
+  font-weight: 500;
+}
+.variability-range-grid p {
+  font-size: 10px;
+  color: #53614f;
+}
+.variability-legend {
+  display: flex;
+  gap: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.variability-legend span:nth-child(1) {
+  color: #284e3c;
+}
+.variability-legend span:nth-child(2) {
+  color: #956422;
+}
+.variability-legend span:nth-child(3) {
+  color: #5965a1;
+}
+.variability-lab .sizing-recommendation-copy {
+  overflow-wrap: anywhere;
+}
+.variability-lab .table-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+  margin-top: 20px;
+  border: 1px solid #e4e7db;
+  border-radius: 6px;
+}
+.variability-lab table {
+  min-width: 1100px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.variability-lab caption {
+  text-align: left;
+  padding: 15px;
+  color: #53614f;
+  font-size: 11px;
+}
+.variability-lab th,
+.variability-lab td {
+  padding: 13px 14px;
+  border-bottom: 1px solid #e4e7db;
+  text-align: right;
+}
+.variability-lab thead th {
+  background: #f3f5ed;
+  font-size: 10px;
+  font-weight: 600;
+}
+.variability-lab th:first-child {
+  text-align: left;
+}
+.variability-candidates summary {
+  font-size: 14px;
+}
+.variability-exports h3 {
+  margin-bottom: 6px;
+}
+.variability-export-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+.variability-export-buttons button {
+  white-space: normal;
+  text-align: left;
+}
+@media (min-width: 601px) and (max-width: 1100px) {
+  .hackathon-label {
+    display: none;
+  }
+  .nav {
+    gap: 18px;
+  }
+  .nav a {
+    font-size: 10px;
+  }
+  .brand {
+    font-size: 20px;
+  }
+  .annual-card {
+    padding: 18px;
+  }
+  .annual-card-title {
+    flex-wrap: wrap;
+  }
+  .annual-supply strong {
+    font-size: 24px;
+  }
+  .annual-card dl {
+    font-size: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .variability-lab {
+    padding: 30px 0;
+  }
+  .variability-lab > .section-heading {
+    align-items: flex-start;
+  }
+  .variability-lab > .section-heading h2 {
+    font-size: 26px;
+    line-height: 1.3;
+  }
+  .variability-lab > .section-heading {
+    flex-wrap: wrap;
+  }
+  .variability-loader,
+  .variability-context,
+  .variability-ranges,
+  .variability-shortages,
+  .variability-candidates,
+  .variability-exports {
+    padding: 20px 16px;
+  }
+  .variability-source-heading {
+    gap: 10px;
+  }
+  .variability-lab h3 {
+    font-size: 15px;
+  }
+  .variability-source-heading p,
+  .variability-status,
+  .variability-context > p,
+  .variability-loader p,
+  .variability-ranges > p,
+  .variability-shortages > p,
+  .variability-candidates > p,
+  .variability-exports p {
+    font-size: 11px;
+  }
+  .year-progress {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .year-progress li {
+    padding: 10px 13px;
+  }
+  .annual-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .annual-card {
+    padding: 20px;
+  }
+  .annual-card-title h3 {
+    font-size: 23px;
+  }
+  .annual-supply strong {
+    font-size: 30px;
+  }
+  .annual-card dl {
+    font-size: 12px;
+  }
+  .variability-range-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .variability-provenance dl {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+  .variability-provenance dd {
+    margin-bottom: 8px;
+  }
+  .variability-legend {
+    gap: 16px;
+    font-size: 10px;
+  }
+  .variability-export-buttons button {
+    font-size: 10px;
+  }
+  .variability-lab .sizing-recommended-number {
+    font-size: 43px;
+  }
+  .nav a[href="#historical-variability"] {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav.open {
+    flex-wrap: wrap;
+  }
+  .nav a {
+    flex: 1 1 28%;
+  }
+}
+.variability-methodology {
+  padding: 23px 27px;
+  font-size: 13px;
+}
+.variability-methodology summary {
+  font-weight: 600;
+  cursor: pointer;
+}
+.variability-methodology p {
+  margin-top: 15px;
+  font-size: 12px;
+  color: #53614f;
+}
+@media (max-width: 600px) {
+  .variability-methodology {
+    padding: 18px 16px;
+    font-size: 11px;
+  }
+  .variability-methodology p {
+    font-size: 11px;
+  }
+}

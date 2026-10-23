@@ -1,8 +1,8 @@
-# CisternLab · BUILD 03
+# CisternLab · BUILD 04
 
-**Every drop has a second life.** A local, transparent rooftop rainwater harvesting simulator for Green Shift Hacks 2026. Explore illustrative home, school, and small-facility scenarios using synthetic rainfall or a complete year of historical ERA5 reanalysis. Adjust inputs, inspect every simulated liter, and compare storage capacities in the **Tank Sizing & Decision Lab**. BUILD 03 preserves the verified simulation, data integration, and original visual design.
+**Every drop has a second life.** A local, transparent rooftop rainwater harvesting simulator for Green Shift Hacks 2026. Explore illustrative home, school, and small-facility scenarios using synthetic rainfall or a complete year of historical ERA5 reanalysis. Adjust inputs, inspect every simulated liter, and compare storage capacities in the **Tank Sizing & Decision Lab**. BUILD 04 adds an independent three-year Historical Variability Lab while preserving both verified engines and all previous workflows.
 
-Choose **DEMO DATA — SYNTHETIC** (offline-ready authored examples) or **HISTORICAL REANALYSIS — ERA5** (modeled climate data from Open-Meteo). All simulation and sizing outputs remain **ESTIMATED RESULTS**, not measured savings or site observations. No backend, account, API key, paid API, database, tracker, or deployment is involved. Fonts are bundled locally. BUILD 04 is not started.
+Choose **DEMO DATA — SYNTHETIC** (offline-ready authored examples) or **HISTORICAL REANALYSIS — ERA5** (modeled climate data from Open-Meteo). All simulation and sizing outputs remain **ESTIMATED RESULTS**, not measured savings or site observations. No backend, account, API key, paid API, database, tracker, or deployment is involved. Fonts are bundled locally. BUILD 05 is not started.
 
 ## Run locally
 
@@ -121,6 +121,65 @@ Background references for storage assessment and daily water-balance comparison:
 
 These references motivate transparent tank comparison; **they do not establish CisternLab's exact 90% rule as a universal optimum**. This lab is model-based decision support, not certified engineering design, physical installation design, drinking-water advice, a drought-proof guarantee, or measured savings.
 
+## Historical Variability Lab · BUILD 04
+
+Select **Historical Variability Lab** in navigation. First activate a validated historical city in the source panel, then press **Load three-year comparison**. Synthetic data has no historical location; its lab entry routes to historical selection without making requests. A pending search result, selected city or selected year does not replace the active validated location.
+
+The lab accepts **2023 (365 days), 2024 (366 days) and 2025 (365 days)** together. It reuses the active annual dataset and the existing page-session validated cache. At most two archive requests run concurrently, with one request per missing year, using the established `models=era5`, `daily=rain_sum`, `precipitation_unit=mm` client. There are no candidate-specific downloads or automatic retries. Roof, efficiency, demand, capacity and target edits run entirely locally. Standard evaluations are memoized separately from threshold decisions and the additional current tank.
+
+All three years must pass the existing exact-calendar validator plus comparison checks for selected location identity, requested coordinates, ERA5/model/variable/units, complete provenance, date range, and consistent returned grid and daily timezone metadata. City coordinates can differ from the returned ERA5 grid; both remain visible and exported. Different grids or fixed offsets **block the comparison** and report the mismatch. Investigate the provider's selection; a page reload clears session cache if a fresh download is needed. No missing date/year is filled or partial analysis accepted.
+
+Requests keep the existing 15-second timeout, HTTP/rate-limit messages, abort and revision guards. Changing the active source or cancelling aborts a pending batch; late results cannot commit. Successful individual transfers can remain cached after another year fails, but the displayed analysis changes only atomically after all three validate. A previous complete comparison remains explicitly labeled with its original city on reload failure or source change, and uses the current physical scenario inputs. Its export records that displayed comparison city. Source records expose every original URL, retrieval timestamp, date count, requested/returned coordinate pair and fixed UTC offset.
+
+### Independent annual model and metrics
+
+Each candidate/year uses the **unchanged daily simulator and unchanged sizing engine**. All candidates share roof, efficiency, fixed daily demand and standard capacities. Every year starts at **0 L on January 1**. December storage never enters the next January: the years are three separate simulations, not a concatenated 1,096-day storage run. Dashboard initial storage is never changed or used by this comparison.
+
+For every candidate and year the lab reports rainfall (mm), supplied water (L), modeled freshwater displacement (L, conditional one-for-one substitution only), annual demand (L), volumetric coverage (fraction or displayed %), overflow, unmet demand, fully supplied days, shortage days, longest shortage streak and ending storage. Full precision is retained in calculations, exact tables and exports. Only presentation cards round.
+
+A fully supplied day has `unmetDemandL === 0`. A **shortage day** has `unmetDemandL > 0`, including any fractional positive amount. Its **longest shortage streak** is the longest consecutive run of those days, reset at each year boundary. This is modeled unmet demand, not meteorological drought or sub-daily service. With zero demand, all days are literally fully supplied but coverage/reliability percentages are **undefined**, supply is zero and there is no recommendation.
+
+### Annual and three-year decisions
+
+Each year uses the existing 80/90/95/98% rule, default 90%, against its own maximum standard tested supply. Define for year y:
+
+```text
+M[y] = maximum supplied L over standard capacities
+T[y] = targetPercent / 100 × M[y]
+tolerance[y] = 1e-10 × M[y] L
+Three-year comparison capacity = smallest positive STANDARD C such that
+  supply[y,C] + tolerance[y] ≥ T[y] for EVERY year
+```
+
+The current-only tank never alters the standard pool, annual maxima or recommendation. If any M[y] is zero, its relative yield target is not informative: the three-year recommendation is absent with an explanation (zero demand, roof, efficiency, rain, or other no benefit). Available individual annual decisions and metrics remain visible. The cross-year rule is a conservative historical comparison heuristic over the selected three years, not a calibrated risk measure, global optimum or guarantee.
+
+At the current tank capacity the lab identifies all tied highest/lowest supply and coverage years, rainfall range, largest shortage-day count and longest shortage streak. The least rainy year need not have the lowest coverage because timing matters. Ranges describe **only these three years**, with no recurrence probability, climate normal, forecast or trend significance. No annual outputs are aggregated by carrying tank storage across boundaries.
+
+### Comparison exports and reproduction
+
+**Export historical comparison CSV** yields one header plus 33 standard capacity/year rows, with unrounded metrics, annual/cross-year decisions, target/tolerance, physical inputs, empty starts, JSON-encoded provenance, attribution and assumptions repeated in consistent columns. Undefined percentages/capacities are empty CSV cells. Formula-leading text is protected; quotes, commas and line breaks are escaped. Existing daily and sizing CSV exports remain unchanged.
+
+**Export reproducibility JSON** records schema `cisternlab.historical-comparison.v1`, all three original datasets including every date/rain value and complete provenance, physical inputs/current capacity, standard candidates, threshold, assumptions, attribution, decisions, annual results and current-tank variability. Undefined numbers are `null`. It is a downloaded local analysis record, not server persistence. Identical inputs and source metadata produce identical export bytes; no export-time clock or random value is introduced.
+
+To reproduce without network, parse the JSON; validate its `datasets` through `validateHistoricalComparison` in `src/data/historicalComparison.ts`; call `evaluateVariability(snapshot.inputs, snapshot.datasets.map(d => ({ key: String(d.year), rainfallMm: d.rainfallMm })), snapshot.standardCapacitiesL)`, then `decideVariability(evaluation, snapshot.targetPercent)` and `currentAnnualResults(evaluation, snapshot.inputs.currentTankCapacityL)` from `src/engine/variability.ts`. The unit tests exercise this exact round trip. There is no file-import interface in this build.
+
+The independent **short synthetic engine fixture** has roof 1 m², efficiency 1, demand 5 L/day, capacities `[0,5,10,20]`, and sequences A `[10,0,10]`, B `[5,5,5]`, C `[0,5,5]`. At 90%, annual decisions are **10, 5, 5 L** and the three-year decision is **10 L**. These three-day fixtures are never presented as complete historical years; complete 365/366 transport fixtures are tested separately.
+
+### Scientific interpretation and limited records
+
+[Open-Meteo's historical documentation](https://open-meteo.com/en/docs/historical-weather-api) describes ERA5 and the daily aggregation source. [Imteaz, Ahsan & Shanableh (2013)](https://doi.org/10.1016/j.resconrec.2013.05.006) provides daily water-balance reliability background. [Hazaymeh & Lange (2026), “Effect of rainfall variability and temporal resolution on rainwater harvesting tank sizing in a case study from Jordan and Germany”](https://doi.org/10.1007/s43832-026-00344-z) examines rainfall variability, seasonality, record length and temporal resolution in selected sites in those two regions. Their results favor longer daily records for their scenarios and show why short records need caution; these findings are not a universal site-design rule.
+
+Our three-year demonstration is intentionally limited. It cannot establish reliable long-term site-specific storage design or climate-change trends. These studies **do not validate CisternLab's exact cross-year decision heuristic**. ERA5 is gridded modeled rain, outputs are conditional estimates, and the daily rain-before-demand model omits finer timing and installation processes. No measured savings, design certification, economic optimum or climate prediction is claimed.
+
+Optional live three-year verification is separate from mocked tests:
+
+```powershell
+npm run build
+npm run verify:historical-live
+```
+
+This uses the actual browser UI and public endpoints once for Edirne, 2023–2025, on an owned preview at port 4319. Dated metadata/response-hash records and an original reproducibility snapshot are saved under `docs/verification/build-04-live-*`. A failure is recorded honestly without automatic retries. BUILD 02 live records are preserved. See the BUILD 04 report for the actual observed outcome.
+
 ## Deterministic model and equations
 
 The pure engine is in `src/engine/simulation.ts`. It has no clock, random source, network, browser state, or hidden default. Identical inputs produce identical results. Inputs are validated before calculation, are never mutated, and results keep JavaScript floating-point precision. Display rounding does not feed the engine.
@@ -158,7 +217,7 @@ Reference check: `A=100`, `P=[10]`, `e=0.80`, `C=500`, `D=200`, initial storage 
 
 `src/data/demo.ts` contains the actual authored sequences, each exactly 30 days. The sequences have no dates, locations, weather-station identity, or historical/live/forecast status. They illustrate storage behavior under differently timed rain events and do not represent climate probabilities. The default mixed sequence totals **150 mm**. No randomness or external data is used.
 
-Roof area is horizontal projected catchment area. A single fixed efficiency represents collection losses. These losses occur before tank inflow; mass-balance assertions cover water entering the tank plus initial storage. Roof-water losses are not an additional tank outflow. There is no separate first-flush, evaporation, leakage, drainage, pump, treatment, or infiltration model. Demand is constant each day. Initial storage is assumed to be previously harvested rainwater. Each historical analysis covers one complete selected year; no multiyear extrapolation or comparison is made.
+Roof area is horizontal projected catchment area. A single fixed efficiency represents collection losses. These losses occur before tank inflow; mass-balance assertions cover water entering the tank plus initial storage. Roof-water losses are not an additional tank outflow. There is no separate first-flush, evaporation, leakage, drainage, pump, treatment, or infiltration model. Demand is constant each day. Initial storage is assumed to be previously harvested rainwater. The dashboard and sizing lab cover one complete selected year. The historical variability lab compares three independent complete years without extrapolation.
 
 ## Historical data: exact source and interpretation
 
@@ -206,14 +265,14 @@ These quantities describe a modeled scenario. They are not measured savings, pro
 
 ## Architecture and verification
 
-React, strict TypeScript, Vite, Tailwind CSS, Lucide, and Recharts. No additional dependencies were needed for BUILDs 02 or 03. Vitest preserves all original engine/data tests and adds pure sizing, threshold, marginal, no-benefit, fractional, fairness, provenance, spreadsheet-safety, and conservation tests. Playwright retains the original workflows and adds sizing/reactivity/export/keyboard tests and accessibility scans. Historical requests are mocked in deterministic tests. See `BUILD_01_REPORT.md`, `BUILD_02_REPORT.md`, and `BUILD_03_REPORT.md` for verification and screenshots.
+React, strict TypeScript, Vite, Tailwind CSS, Lucide, and Recharts. No additional dependencies were needed for BUILDs 02, 03 or 04. Vitest preserves all original engine/data tests and adds pure sizing, threshold, marginal, no-benefit, fractional, fairness, provenance, spreadsheet-safety, and conservation tests. Playwright retains the original workflows and adds sizing/reactivity/export/keyboard tests and accessibility scans. Historical requests are mocked in deterministic tests. See `BUILD_01_REPORT.md`, `BUILD_02_REPORT.md`, `BUILD_03_REPORT.md`, and `BUILD_04_REPORT.md` for verification and screenshots.
 
 `src/engine/simulation.ts` is unchanged from BUILD 01 and independent of React. `src/data/` separates authored demos, typed dataset metadata, and the API adapter/client. `RainfallSource` owns pending selections and loading; `App` keeps the active validated dataset and scenario. Only the rainfall series enters the existing engine. No provenance, timestamp, networking, or source selection affects the mathematical model.
 
 ## Current limitations
 
 - A daily rain-before-demand approximation can overstate overflow or understate usable water relative to a finer time-step model.
-- Synthetic periods are 30 days; historical analyses are one complete allowed calendar year, with fixed daily demand. Sizing uses a finite candidate set and a water-yield heuristic. There is no rainfall editor, multiyear optimization/comparison, saved scenario, or database.
+- Synthetic periods are 30 days; historical analyses are one complete allowed calendar year, with fixed daily demand. Sizing uses a finite candidate set and a water-yield heuristic. A three-year historical sensitivity comparison is available; there is no rainfall editor, long-term optimization, saved account scenario or database.
 - Every sizing run starts empty with no preceding-period carryover. Recommendation thresholds and tank candidates are transparent project choices, not certified design standards, verified products, uncertainty estimates, or financial/carbon optimization.
 - No physical design, structural suitability, water quality, filtration, first flush, pump electricity, costs, or carbon factors.
 - Rounded table and balance values can show tiny apparent discrepancies; calculations and CSV retain full precision.
@@ -226,4 +285,4 @@ React, strict TypeScript, Vite, Tailwind CSS, Lucide, and Recharts. No additiona
 
 Run locally, select Historical Reanalysis, search and explicitly select the desired city, select 2023/2024/2025, and press Load rainfall data. Inspect the active period/provenance, set all five scenario controls, and download CSV. Keep that file with its retrieval timestamp and source URL; roof/tank inputs and original daily rainfall are sufficient to reproduce the same deterministic simulation without fetching again. Identical rainfall and scenario inputs yield identical outputs. API responses themselves may change, so a future download of the same URL is not a pinned snapshot.
 
-BUILD 03 stops at tank-capacity comparison and verification. No deployment, multiyear optimization, financial payback, CO₂ estimates, tank purchasing, installation design, or BUILD 04 work is included.
+BUILD 04 stops at verified historical sensitivity comparisons. No deployment, long-term optimization, financial payback, CO₂ estimates, purchasing, installation design, or BUILD 05 work is included.

@@ -1,0 +1,342 @@
+{
+  "kind": "LIVE SERVICE VERIFICATION — NOT MOCKED — BUILD 04",
+  "verifiedAt": "2026-10-23T19:29:35.527Z",
+  "status": "passed",
+  "phase": "complete",
+  "browserErrors": [],
+  "archives": [
+    {
+      "year": 2023,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=41.67719&longitude=26.55597&start_date=2023-01-01&end_date=2023-12-31&daily=rain_sum&models=era5&precipitation_unit=mm&timezone=auto&timeformat=iso8601",
+      "status": 200,
+      "model": "era5",
+      "variable": "rain_sum",
+      "requestedUnit": "mm",
+      "requestedCoordinates": {
+        "latitude": 41.67719,
+        "longitude": 26.55597
+      },
+      "returnedCoordinates": {
+        "latitude": 41.75,
+        "longitude": 26.5
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneAbbreviation": "GMT+3",
+      "utcOffsetSeconds": 10800,
+      "units": {
+        "time": "iso8601",
+        "rain_sum": "mm"
+      },
+      "days": 365,
+      "firstDate": "2023-01-01",
+      "lastDate": "2023-12-31",
+      "observedRainfallMm": 460.30000000000024,
+      "responseSha256": "161a765dddc1e75be273cbcadf9eafe8c12baa2155e07974939a28193e484cfe",
+      "dailyPayloadSha256": "2ecbd32418705d28c56bf6f5ca47b588ab0a8603859356d5dc6d4c490280af0d",
+      "corsAllowOrigin": "*"
+    },
+    {
+      "year": 2024,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=41.67719&longitude=26.55597&start_date=2024-01-01&end_date=2024-12-31&daily=rain_sum&models=era5&precipitation_unit=mm&timezone=auto&timeformat=iso8601",
+      "status": 200,
+      "model": "era5",
+      "variable": "rain_sum",
+      "requestedUnit": "mm",
+      "requestedCoordinates": {
+        "latitude": 41.67719,
+        "longitude": 26.55597
+      },
+      "returnedCoordinates": {
+        "latitude": 41.75,
+        "longitude": 26.5
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneAbbreviation": "GMT+3",
+      "utcOffsetSeconds": 10800,
+      "units": {
+        "time": "iso8601",
+        "rain_sum": "mm"
+      },
+      "days": 366,
+      "firstDate": "2024-01-01",
+      "lastDate": "2024-12-31",
+      "observedRainfallMm": 519.5,
+      "responseSha256": "6a4cfa3b05f08cea1a23dac9f1b2edf61774080b0a31282add8bf5c8cb9802c5",
+      "dailyPayloadSha256": "1045e7820b6ec6263e82101b9501361e0e2907857d45ff10ce40f504ba662475",
+      "corsAllowOrigin": "*"
+    },
+    {
+      "year": 2025,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=41.67719&longitude=26.55597&start_date=2025-01-01&end_date=2025-12-31&daily=rain_sum&models=era5&precipitation_unit=mm&timezone=auto&timeformat=iso8601",
+      "status": 200,
+      "model": "era5",
+      "variable": "rain_sum",
+      "requestedUnit": "mm",
+      "requestedCoordinates": {
+        "latitude": 41.67719,
+        "longitude": 26.55597
+      },
+      "returnedCoordinates": {
+        "latitude": 41.75,
+        "longitude": 26.5
+      },
+      "timezone": "Europe/Istanbul",
+      "timezoneAbbreviation": "GMT+3",
+      "utcOffsetSeconds": 10800,
+      "units": {
+        "time": "iso8601",
+        "rain_sum": "mm"
+      },
+      "days": 365,
+      "firstDate": "2025-01-01",
+      "lastDate": "2025-12-31",
+      "observedRainfallMm": 417.4999999999999,
+      "responseSha256": "23a904747ad69c25d42abf95d62b6e1f58b9ac6476127fa1f59232f506bda503",
+      "dailyPayloadSha256": "88c7d37d3ddf43836e2ad1c001d4cdd7c01197b2c2be6e678f5455d2accbd532",
+      "corsAllowOrigin": "*"
+    }
+  ],
+  "attribution": "Open-Meteo / ERA5 / Copernicus; CC BY 4.0. CisternLab derives estimated tank outputs, not measured savings.",
+  "geocoding": {
+    "url": "https://geocoding-api.open-meteo.com/v1/search?name=Edirne&count=6&language=en&format=json",
+    "status": 200,
+    "selected": {
+      "id": 747712,
+      "name": "Edirne",
+      "latitude": 41.67719,
+      "longitude": 26.55597,
+      "elevation": 62,
+      "feature_code": "PPLA",
+      "country_code": "TR",
+      "admin1_id": 747711,
+      "admin2_id": 13308783,
+      "timezone": "Europe/Istanbul",
+      "population": 180002,
+      "country_id": 298795,
+      "country": "Republic of Türkiye",
+      "admin1": "Edirne",
+      "admin2": "Edirne"
+    },
+    "corsAllowOrigin": "*"
+  },
+  "physicalInputs": {
+    "roofAreaM2": 120,
+    "collectionEfficiency": 0.8,
+    "dailyDemandL": 250,
+    "currentTankCapacityL": 2000
+  },
+  "decision": {
+    "targetPercent": 90,
+    "annual": [
+      {
+        "key": "2023",
+        "targetPercent": 90,
+        "maximumStandardSupplyL": 42422.79999999999,
+        "targetSupplyL": 38180.51999999999,
+        "comparisonToleranceL": 0.000004242279999999999,
+        "recommended": {
+          "capacityL": 2000,
+          "isStandard": true,
+          "supplyL": 39030.79999999998,
+          "demandCoverage": 0.42773479452054775,
+          "overflowL": 5158.000000000002,
+          "unmetDemandL": 52219.20000000002,
+          "finalStorageL": 0,
+          "fullySuppliedDays": 130,
+          "simulationDays": 365,
+          "dailyReliability": 0.3561643835616438,
+          "incomingL": 44188.799999999974,
+          "massBalanceErrorL": -7.275957614183426e-12,
+          "marginal": {
+            "fromCapacityL": 1000,
+            "additionalCapacityL": 1000,
+            "additionalSupplyL": 5720.799999999996,
+            "incrementalYieldPer1000L": 5720.799999999996
+          }
+        },
+        "achievedFraction": 0.9200429957475695,
+        "noBenefitReason": null
+      },
+      {
+        "key": "2024",
+        "targetPercent": 90,
+        "maximumStandardSupplyL": 44851.599999999984,
+        "targetSupplyL": 40366.43999999999,
+        "comparisonToleranceL": 0.000004485159999999999,
+        "recommended": {
+          "capacityL": 2000,
+          "isStandard": true,
+          "supplyL": 41299.19999999999,
+          "demandCoverage": 0.4513573770491802,
+          "overflowL": 7928.8,
+          "unmetDemandL": 50200.80000000003,
+          "finalStorageL": 644,
+          "fullySuppliedDays": 143,
+          "simulationDays": 366,
+          "dailyReliability": 0.3907103825136612,
+          "incomingL": 49872,
+          "massBalanceErrorL": 7.275957614183426e-12,
+          "marginal": {
+            "fromCapacityL": 1000,
+            "additionalCapacityL": 1000,
+            "additionalSupplyL": 6796.799999999988,
+            "incrementalYieldPer1000L": 6796.799999999988
+          }
+        },
+        "achievedFraction": 0.9207965825076475,
+        "noBenefitReason": null
+      },
+      {
+        "key": "2025",
+        "targetPercent": 90,
+        "maximumStandardSupplyL": 40053.99999999999,
+        "targetSupplyL": 36048.59999999999,
+        "comparisonToleranceL": 0.0000040054,
+        "recommended": {
+          "capacityL": 3000,
+          "isStandard": true,
+          "supplyL": 36143.999999999985,
+          "demandCoverage": 0.39609863013698615,
+          "overflowL": 3910.0000000000005,
+          "unmetDemandL": 55106.00000000001,
+          "finalStorageL": 26,
+          "fullySuppliedDays": 123,
+          "simulationDays": 365,
+          "dailyReliability": 0.336986301369863,
+          "incomingL": 40080,
+          "massBalanceErrorL": 1.4551915228366852e-11,
+          "marginal": {
+            "fromCapacityL": 2000,
+            "additionalCapacityL": 1000,
+            "additionalSupplyL": 1882.3999999999942,
+            "incrementalYieldPer1000L": 1882.3999999999942
+          }
+        },
+        "achievedFraction": 0.9023817845908022,
+        "noBenefitReason": null
+      }
+    ],
+    "capacityL": 3000,
+    "noBenefitReason": null
+  },
+  "currentAnnualResults": [
+    {
+      "key": "2023",
+      "candidate": {
+        "capacityL": 2000,
+        "isStandard": true,
+        "supplyL": 39030.79999999998,
+        "demandCoverage": 0.42773479452054775,
+        "overflowL": 5158.000000000002,
+        "unmetDemandL": 52219.20000000002,
+        "finalStorageL": 0,
+        "fullySuppliedDays": 130,
+        "simulationDays": 365,
+        "dailyReliability": 0.3561643835616438,
+        "incomingL": 44188.799999999974,
+        "massBalanceErrorL": -7.275957614183426e-12,
+        "marginal": {
+          "fromCapacityL": 1000,
+          "additionalCapacityL": 1000,
+          "additionalSupplyL": 5720.799999999996,
+          "incrementalYieldPer1000L": 5720.799999999996
+        },
+        "rainfallMm": 460.30000000000024,
+        "annualDemandL": 91250,
+        "modeledFreshwaterDisplacementL": 39030.79999999998,
+        "shortageDays": 235,
+        "longestShortageStreak": 57
+      }
+    },
+    {
+      "key": "2024",
+      "candidate": {
+        "capacityL": 2000,
+        "isStandard": true,
+        "supplyL": 41299.19999999999,
+        "demandCoverage": 0.4513573770491802,
+        "overflowL": 7928.8,
+        "unmetDemandL": 50200.80000000003,
+        "finalStorageL": 644,
+        "fullySuppliedDays": 143,
+        "simulationDays": 366,
+        "dailyReliability": 0.3907103825136612,
+        "incomingL": 49872,
+        "massBalanceErrorL": 7.275957614183426e-12,
+        "marginal": {
+          "fromCapacityL": 1000,
+          "additionalCapacityL": 1000,
+          "additionalSupplyL": 6796.799999999988,
+          "incrementalYieldPer1000L": 6796.799999999988
+        },
+        "rainfallMm": 519.5,
+        "annualDemandL": 91500,
+        "modeledFreshwaterDisplacementL": 41299.19999999999,
+        "shortageDays": 223,
+        "longestShortageStreak": 29
+      }
+    },
+    {
+      "key": "2025",
+      "candidate": {
+        "capacityL": 2000,
+        "isStandard": true,
+        "supplyL": 34261.59999999999,
+        "demandCoverage": 0.3754695890410958,
+        "overflowL": 5792.400000000001,
+        "unmetDemandL": 56988.40000000001,
+        "finalStorageL": 26,
+        "fullySuppliedDays": 114,
+        "simulationDays": 365,
+        "dailyReliability": 0.31232876712328766,
+        "incomingL": 40080,
+        "massBalanceErrorL": 7.275957614183426e-12,
+        "marginal": {
+          "fromCapacityL": 1000,
+          "additionalCapacityL": 1000,
+          "additionalSupplyL": 6256.000000000004,
+          "incrementalYieldPer1000L": 6256.000000000004
+        },
+        "rainfallMm": 417.4999999999999,
+        "annualDemandL": 91250,
+        "modeledFreshwaterDisplacementL": 34261.59999999999,
+        "shortageDays": 251,
+        "longestShortageStreak": 51
+      }
+    }
+  ],
+  "variability": {
+    "supply": {
+      "min": 34261.59999999999,
+      "max": 41299.19999999999,
+      "lowestYears": ["2025"],
+      "highestYears": ["2024"]
+    },
+    "coverage": {
+      "min": 0.3754695890410958,
+      "max": 0.4513573770491802,
+      "lowestYears": ["2025"],
+      "highestYears": ["2024"]
+    },
+    "rainfall": {
+      "min": 417.4999999999999,
+      "max": 519.5,
+      "lowestYears": ["2025"],
+      "highestYears": ["2024"]
+    },
+    "shortageDays": {
+      "min": 223,
+      "max": 251,
+      "lowestYears": ["2024"],
+      "highestYears": ["2025"]
+    },
+    "shortageStreak": {
+      "min": 29,
+      "max": 57,
+      "lowestYears": ["2024"],
+      "highestYears": ["2023"]
+    }
+  },
+  "snapshotSha256": "2aee94b5a369acf8164bbb1e9d7265c8b89f5eba0a2a8719fe4a132c5e7197d7",
+  "browserCorsVerified": true
+}

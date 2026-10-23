@@ -29,6 +29,10 @@ import RainfallSource from "./components/RainfallSource";
 import { syntheticDataset } from "./data/rainfall";
 import type { HistoricalDataset, SourceMode } from "./data/rainfall";
 
+const HistoricalVariabilityLab = lazy(
+  () => import("./components/HistoricalVariabilityLab"),
+);
+
 const TankSizingLab = lazy(() => import("./components/TankSizingLab"));
 
 const WaterChart = lazy(() => import("./components/WaterChart"));
@@ -400,7 +404,7 @@ export default function App() {
               <Droplet size={21} strokeWidth={1.7} />
             </span>
             Cistern<span className="brand-light">Lab</span>
-            <span className="build-badge">BUILD 03</span>
+            <span className="build-badge">BUILD 04</span>
           </a>
           <nav
             className={menuOpen ? "nav open" : "nav"}
@@ -418,6 +422,12 @@ export default function App() {
             </a>
             <a href="#tank-sizing" onClick={() => setMenuOpen(false)}>
               Tank Sizing
+            </a>
+            <a
+              href="#historical-variability"
+              onClick={() => setMenuOpen(false)}
+            >
+              Historical Variability Lab
             </a>
             <a href="#methodology" onClick={() => setMenuOpen(false)}>
               Methodology <ArrowUpRight size={13} />
@@ -1026,6 +1036,24 @@ export default function App() {
           }
         >
           <TankSizingLab dataset={dataset} scenario={scenario} />
+        </Suspense>
+
+        <Suspense
+          fallback={
+            <p className="chart-loading">Loading historical variability lab…</p>
+          }
+        >
+          <HistoricalVariabilityLab
+            dataset={dataset}
+            scenario={scenario}
+            onChooseHistorical={() => {
+              setSourceMode("historical");
+              document.getElementById("simulator")?.scrollIntoView();
+              requestAnimationFrame(() =>
+                document.getElementById("location-search")?.focus(),
+              );
+            }}
+          />
         </Suspense>
 
         <section

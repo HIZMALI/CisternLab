@@ -9,7 +9,8 @@ import {
   Search,
   X,
 } from "lucide-react";
-import { ERA5_SOURCE, OpenMeteoClient, RequestSlot } from "../data/openMeteo";
+import { ERA5_SOURCE, RequestSlot } from "../data/openMeteo";
+import { weatherClient as client } from "../data/weatherClient";
 import { HISTORICAL_YEARS, locationLabel } from "../data/rainfall";
 import type {
   HistoricalDataset,
@@ -19,7 +20,6 @@ import type {
   SourceMode,
 } from "../data/rainfall";
 
-const client = new OpenMeteoClient();
 type Status = "idle" | "waiting" | "loading" | "success" | "error";
 const coords = (point: { latitude: number; longitude: number } | null) =>
   point

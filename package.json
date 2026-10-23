@@ -1,8 +1,8 @@
 {
   "name": "cisternlab",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
-  "description": "Transparent rainwater simulation and Tank Sizing Decision Lab — Green Shift Hacks 2026, BUILD 03",
+  "description": "Transparent rainwater simulation, tank sizing and Historical Variability Lab — Green Shift Hacks 2026, BUILD 04",
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",
@@ -14,7 +14,8 @@
     "test:e2e": "playwright test",
     "verify:live": "node scripts/verify-live.mjs",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "verify:historical-live": "node scripts/verify-historical-live.mjs"
   },
   "keywords": [],
   "author": "",

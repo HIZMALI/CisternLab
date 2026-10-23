@@ -50,13 +50,13 @@ for (const width of [1440, 768, 390, 320]) {
       })),
     ).toEqual([]);
     await page.screenshot({
-      path: `docs/screenshots/build-03-synthetic-${width}.png`,
+      path: `docs/screenshots/build-04-synthetic-${width}.png`,
       fullPage: true,
       animations: "disabled",
     });
     if (width === 390) {
       await page.locator(".results-column").screenshot({
-        path: "docs/screenshots/build-03-synthetic-390-results.png",
+        path: "docs/screenshots/build-04-synthetic-390-results.png",
         animations: "disabled",
       });
     }

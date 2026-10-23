@@ -242,6 +242,9 @@ export class RequestSlot {
 
 export class OpenMeteoClient {
   private readonly cache = new Map<string, HistoricalDataset>();
+  isCached(request: ArchiveRequest): boolean {
+    return this.cache.has(buildArchiveUrl(request));
+  }
   constructor(
     private readonly fetcher: typeof fetch = globalThis.fetch.bind(globalThis),
     private readonly now: () => string = () => new Date().toISOString(),
