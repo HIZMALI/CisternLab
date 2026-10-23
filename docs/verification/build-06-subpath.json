@@ -1,0 +1,310 @@
+{
+  "kind": "LOCAL PRODUCTION SUBPATH — NO MOCKS",
+  "verifiedAt": "2026-10-23T20:26:41.164Z",
+  "url": "http://127.0.0.1:4320/CisternLab/",
+  "status": "passed",
+  "browser": "Chromium",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "responses": [
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/index-DUFHr-Ce.css",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/jsx-runtime-Wy9s6hX0.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/index-LC9kHYKj.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/ComposedChart-DZea674j.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/Line-CLfD8E1F.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/Bar-wvxSSyKR.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/WaterChart-BpnrmNZL.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/TankSizingLab-CqLEA_IY.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/layers-DJOozO6i.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/tankSizing-DvVuJJvw.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/variabilityExport-KVekpkfD.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/HistoricalVariabilityLab-Z8zQCjPC.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/ImpactEvidenceStudio-B_rPn8KA.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/CartesianChart-ZKUpNhiA.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/dm-sans-latin-wght-normal-Xz1IZZA0.woff2",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/ImpactEvidenceChart-D-NZ7gzu.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/SizingChart-Cp9D7klM.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/archived-edirne.snapshot-MX1A3M1A.json",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/index-DUFHr-Ce.css",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/jsx-runtime-Wy9s6hX0.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/index-LC9kHYKj.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/dm-sans-latin-wght-normal-Xz1IZZA0.woff2",
+      "status": 304
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2",
+      "status": 304
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/ComposedChart-DZea674j.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/Line-CLfD8E1F.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/Bar-wvxSSyKR.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/layers-DJOozO6i.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/tankSizing-DvVuJJvw.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/TankSizingLab-CqLEA_IY.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/variabilityExport-KVekpkfD.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/WaterChart-BpnrmNZL.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/HistoricalVariabilityLab-Z8zQCjPC.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/ImpactEvidenceStudio-B_rPn8KA.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/CartesianChart-ZKUpNhiA.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/ImpactEvidenceChart-D-NZ7gzu.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/SizingChart-Cp9D7klM.js",
+      "status": 200
+    },
+    {
+      "phase": "core",
+      "url": "http://127.0.0.1:4320/CisternLab/assets/archived-edirne.snapshot-MX1A3M1A.json",
+      "status": 200
+    }
+  ],
+  "viewports": [
+    {
+      "width": 1440,
+      "pageOverflow": false,
+      "axeViolations": 0,
+      "keyboardTable": "passed",
+      "mobileNavigation": "desktop"
+    },
+    {
+      "width": 768,
+      "pageOverflow": false,
+      "axeViolations": 0,
+      "keyboardTable": "passed",
+      "mobileNavigation": "desktop"
+    },
+    {
+      "width": 390,
+      "pageOverflow": false,
+      "axeViolations": 0,
+      "keyboardTable": "passed",
+      "mobileNavigation": "passed"
+    },
+    {
+      "width": 320,
+      "pageOverflow": false,
+      "axeViolations": 0,
+      "keyboardTable": "passed",
+      "mobileNavigation": "passed"
+    }
+  ],
+  "liveWeather": {
+    "status": "not requested for local verification"
+  },
+  "copy": {
+    "passed": true,
+    "characters": 2450,
+    "sha256": "45cefca8dcd1398f418bba57fe5cc752911326e7f30a12db4da5fadcf4a00fb1"
+  },
+  "exports": {
+    "originalArchive": {
+      "filename": "cisternlab-original-edirne-build-04-snapshot.json",
+      "bytes": 78537,
+      "sha256": "2aee94b5a369acf8164bbb1e9d7265c8b89f5eba0a2a8719fe4a132c5e7197d7"
+    },
+    "daily": {
+      "filename": "cisternlab-mixed-demo.csv",
+      "bytes": 1970,
+      "sha256": "126d954c7268bd962b1e74920645f9952322cc615fef8730f9dd0e65bc8e3e89"
+    },
+    "sizing": {
+      "filename": "cisternlab-tank-sizing-mixed-90.csv",
+      "bytes": 5268,
+      "sha256": "166037194d4320d2553d9ac10431befa38b8f06317e0d1b0e41738a334e5ee3d"
+    }
+  },
+  "walkthrough": "All four stages, keyboard Next, Back and Exit focus passed",
+  "archive": {
+    "url": "http://127.0.0.1:4320/CisternLab/assets/archived-edirne.snapshot-MX1A3M1A.json",
+    "bytes": 78537,
+    "sha256": "2aee94b5a369acf8164bbb1e9d7265c8b89f5eba0a2a8719fe4a132c5e7197d7",
+    "days": [
+      {
+        "year": 2023,
+        "days": 365
+      },
+      {
+        "year": 2024,
+        "days": 366
+      },
+      {
+        "year": 2025,
+        "days": 365
+      }
+    ],
+    "deliveredL": {
+      "current": [39030.8, 41299.2, 34261.6],
+      "selected": [40995.6, 43547.6, 36144]
+    },
+    "currentTotalL": 114591.6,
+    "selectedTotalL": 120687.2,
+    "incrementL": 6095.599999999991,
+    "samePageOffline": "passed after assets prepared",
+    "weatherRequests": 0
+  },
+  "print": {
+    "actualBeforeprintEvent": true,
+    "navigationHidden": true,
+    "pdf": "output/pdf/build-06-subpath-evidence-brief.pdf",
+    "pagination": "Inspect with pdfinfo and render all pages; not inferred by this script"
+  },
+  "hashRefresh": "200, supported hash URL preserved",
+  "assets": {
+    "count": 40,
+    "fontFiles": 4,
+    "nestedPathsOnly": true,
+    "httpErrors": 0
+  },
+  "weatherRequests": []
+}

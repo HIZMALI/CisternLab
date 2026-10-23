@@ -54,7 +54,7 @@ test("navigates to the studio, reproduces archived values and keeps the dashboar
   page.on("request", (r) => {
     if (r.url().includes("open-meteo.com")) calls.push(r.url());
   });
-  await page.goto("/");
+  await page.goto("./");
   await page
     .getByRole("link", { name: "Impact & Evidence", exact: true })
     .click();
@@ -91,7 +91,7 @@ test("archived data and chart remain usable with the browser offline after asset
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/");
+  await page.goto("./");
   await expect(studio(page).getByText(/Archive verified: 1,096/)).toBeVisible();
   await expect(
     studio(page).locator(".impact-evidence-chart .recharts-surface"),
@@ -115,7 +115,7 @@ test("shows the baseline, signed alternative changes, percentage points and no r
   page.on("request", (r) => {
     if (r.url().includes("archived-edirne.snapshot")) localArchiveLoads++;
   });
-  await page.goto("/");
+  await page.goto("./");
   await archived(page);
   await expect(
     studio(page)
@@ -156,7 +156,7 @@ test("shows the baseline, signed alternative changes, percentage points and no r
 test("shows complete archive source records, original hash, classification and downloadable original bytes", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("./");
   await archived(page);
   await studio(page).locator(".impact-provenance > summary").click();
   const records = studio(page).locator(".impact-provenance");
@@ -191,7 +191,7 @@ test("uses active historical data and a validated three-year handoff without cha
   page,
 }) => {
   await mockWeather(page);
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   await expect(studio(page).getByTestId("impact-context")).toContainText(
     "2025-01-01 to 2025-12-31",
@@ -230,7 +230,7 @@ test("uses active historical data and a validated three-year handoff without cha
 test("walkthrough Back Next Exit is keyboard-operable and preserves the selected analysis", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("./");
   await archived(page);
   await studio(page)
     .getByLabel("Alternative standard tank")
@@ -280,7 +280,7 @@ test("copies findings with source, units, periods, assumption and caveats", asyn
   context,
 }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
-  await page.goto("/");
+  await page.goto("./");
   await archived(page);
   await studio(page)
     .getByRole("button", { name: "Copy Key Findings", exact: true })
@@ -307,7 +307,7 @@ test("copies findings with source, units, periods, assumption and caveats", asyn
 test("zero-demand, zero-collection and zero-capacity states never invent impact", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("./");
   await archived(page);
   await studio(page).getByLabel("Archive daily demand (L/day)").fill("0");
   await expect(studio(page).getByTestId("impact-recommendation")).toHaveText(
@@ -356,7 +356,7 @@ for (const failure of ["missing", "malformed", "corrupted"]) {
           });
       },
     );
-    await page.goto("/");
+    await page.goto("./");
     await expect(studio(page).getByRole("alert")).toContainText(
       "Archived example unavailable",
     );
@@ -382,7 +382,7 @@ test("browser print exposes only a complete evidence brief and generates readabl
       document.documentElement.dataset.printRequested = "true";
     };
   });
-  await page.goto("/");
+  await page.goto("./");
   await archived(page);
   await studio(page)
     .getByRole("button", { name: "Print / Save Evidence Brief", exact: true })
@@ -409,7 +409,7 @@ test("browser print exposes only a complete evidence brief and generates readabl
     await expect(brief).toContainText(text);
   await page.evaluate(() => document.fonts.ready);
   await page.pdf({
-    path: "output/pdf/build-05-evidence-brief.pdf",
+    path: "output/pdf/build-06-local-evidence-brief.pdf",
     preferCSSPageSize: true,
     tagged: true,
     outline: true,
@@ -431,7 +431,7 @@ for (const width of [1440, 768, 390, 320]) {
       if (m.type() === "error") errors.push(m.text());
     });
     await page.setViewportSize({ width, height: width < 500 ? 844 : 1000 });
-    await page.goto("/");
+    await page.goto("./");
     await archived(page);
     if (width <= 600)
       await page.getByRole("button", { name: "Open navigation" }).click();
@@ -479,13 +479,13 @@ for (const width of [1440, 768, 390, 320]) {
     await studio(page).locator(".impact-methodology > summary").click();
     await page.mouse.move(0, 0);
     await studio(page).screenshot({
-      path: `docs/screenshots/build-05-impact-archive-${width}.png`,
+      path: `docs/screenshots/build-06-local-impact-archive-${width}.png`,
       animations: "disabled",
     });
     await studio(page)
       .locator(".impact-annual-cards")
       .screenshot({
-        path: `docs/screenshots/build-05-impact-cards-${width}.png`,
+        path: `docs/screenshots/build-06-local-impact-cards-${width}.png`,
         animations: "disabled",
       });
     expect(errors).toEqual([]);

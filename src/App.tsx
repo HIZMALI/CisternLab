@@ -411,7 +411,7 @@ export default function App() {
               <Droplet size={21} strokeWidth={1.7} />
             </span>
             Cistern<span className="brand-light">Lab</span>
-            <span className="build-badge">BUILD 05</span>
+            <span className="build-badge">BUILD 06</span>
           </a>
           <nav
             className={menuOpen ? "nav open" : "nav"}

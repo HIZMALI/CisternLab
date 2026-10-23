@@ -1,8 +1,8 @@
 {
   "name": "cisternlab",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
-  "description": "Transparent rainwater simulation and Environmental Impact Evidence Studio — Green Shift Hacks 2026, BUILD 05",
+  "description": "Transparent rainwater simulation, tank comparisons and traceable impact evidence",
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",
@@ -15,11 +15,12 @@
     "verify:live": "node scripts/verify-live.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify:historical-live": "node scripts/verify-historical-live.mjs"
+    "verify:historical-live": "node scripts/verify-historical-live.mjs",
+    "audit:public": "node scripts/audit-public.mjs"
   },
   "keywords": [],
   "author": "",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "type": "module",
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",

@@ -65,7 +65,7 @@ test("synthetic entry makes no weather requests and routes keyboard users to his
   page.on("request", (r) => {
     if (r.url().includes("open-meteo.com")) requests.push(r.url());
   });
-  await page.goto("/");
+  await page.goto("./");
   await expect(lab(page)).toContainText(
     "Synthetic examples have no real location",
   );
@@ -87,7 +87,7 @@ test("loads only on explicit action, reuses active/cache years and ignores pendi
     calls.push(yearOf(route));
     await route.fulfill({ json: archiveFixture(yearOf(route)) });
   });
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   expect(calls).toEqual([2025]);
   await page.getByLabel("Complete calendar year").selectOption("2024");
@@ -127,7 +127,7 @@ test("shows annual and cross-year decisions, all targets and exact chart-equival
   page,
 }) => {
   await mock(page);
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   await compare(page);
   for (const year of [2023, 2024, 2025]) {
@@ -178,7 +178,7 @@ test("scenario edits and target changes recalculate locally with independent emp
     calls++;
     await route.fulfill({ json: archiveFixture(yearOf(route)) });
   });
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   await compare(page);
   const original = (await lab(page).getByTestId("annual-2023").textContent())!;
@@ -223,7 +223,7 @@ test("rejects a partial year atomically and recovers only on manual retry", asyn
     if (year === 2024 && invalid) f.daily.time.splice(59, 1);
     await route.fulfill({ json: f });
   });
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   await lab(page)
     .getByRole("button", { name: "Load three-year comparison", exact: true })
@@ -251,7 +251,7 @@ test("HTTP failure retains an explicitly identified old-location comparison", as
       await route.fulfill({ status: 429, body: "rate limit" });
     else await route.fulfill({ json: archiveFixture(year) });
   });
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   await compare(page);
   await page.getByLabel("Search city worldwide").fill("Other");
@@ -288,7 +288,7 @@ test("grid mismatch blocks combination and reports the differing coordinates", a
     if (y === 2024) f.latitude = 42;
     await route.fulfill({ json: f });
   });
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   await lab(page)
     .getByRole("button", { name: "Load three-year comparison", exact: true })
@@ -311,7 +311,7 @@ test("source switching cancels stale responses without a partial comparison", as
       await new Promise<void>((resolve) => releases.push(resolve));
     await route.fulfill({ json: archiveFixture(year) }).catch(() => {});
   });
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   await lab(page)
     .getByRole("button", { name: "Load three-year comparison", exact: true })
@@ -354,7 +354,7 @@ test("a newly activated historical location supersedes an unfinished batch", asy
       await new Promise<void>((resolve) => releases.push(resolve));
     await route.fulfill({ json: archiveFixture(year) }).catch(() => {});
   });
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   await lab(page)
     .getByRole("button", { name: "Load three-year comparison", exact: true })
@@ -394,7 +394,7 @@ test("manual cancellation stops pending batch and leaves the active dashboard in
       await new Promise<void>((resolve) => releases.push(resolve));
     await route.fulfill({ json: archiveFixture(year) }).catch(() => {});
   });
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   await lab(page)
     .getByRole("button", { name: "Load three-year comparison", exact: true })
@@ -420,7 +420,7 @@ test("zero demand and one zero-yield year explain why comparison recommendation 
     if (y === 2024) f.daily.rain_sum.fill(0);
     await route.fulfill({ json: f });
   });
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   await compare(page);
   await expect(lab(page).getByTestId("three-year-capacity")).toHaveText("—");
@@ -443,7 +443,7 @@ test("CSV and JSON download preserve provenance, independent starts and 1096 dat
   page,
 }) => {
   await mock(page);
-  await page.goto("/");
+  await page.goto("./");
   await activeHistorical(page);
   await compare(page);
   const csv = await downloaded(page, "Export historical comparison CSV");
@@ -478,7 +478,7 @@ for (const width of [1440, 768, 390, 320]) {
     });
     await page.setViewportSize({ width, height: width < 500 ? 844 : 1000 });
     await mock(page);
-    await page.goto("/");
+    await page.goto("./");
     await activeHistorical(page);
     await compare(page);
     if (width <= 600)
@@ -527,11 +527,11 @@ for (const width of [1440, 768, 390, 320]) {
     await lab(page).locator(".variability-candidates > summary").click();
     await page.mouse.move(0, 0);
     await lab(page).screenshot({
-      path: `docs/screenshots/build-05-variability-mocked-${width}.png`,
+      path: `docs/screenshots/build-06-local-variability-mocked-${width}.png`,
       animations: "disabled",
     });
     await page.screenshot({
-      path: `docs/screenshots/build-05-page-mocked-${width}.png`,
+      path: `docs/screenshots/build-06-local-page-mocked-${width}.png`,
       fullPage: true,
       animations: "disabled",
     });

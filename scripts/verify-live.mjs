@@ -60,7 +60,7 @@ try {
       );
     });
   });
-  if (!(await fetch(origin)).ok)
+  if (!(await fetch(origin + "/CisternLab/")).ok)
     throw new Error("Owned production preview returned an HTTP error.");
   browser = await chromium.launch();
   const context = await browser.newContext({
@@ -75,7 +75,7 @@ try {
   page.on("requestfailed", (request) =>
     errors.push(`${request.url()}: ${request.failure()?.errorText}`),
   );
-  await page.goto(origin);
+  await page.goto(origin + "/CisternLab/");
   evidence.phase = "live geocoding";
   await page
     .getByRole("button", { name: "Historical Reanalysis", exact: true })

@@ -36,7 +36,7 @@ for (const width of [1440, 768, 390, 320]) {
       if (message.type() === "error") errors.push(message.text());
     });
     await page.setViewportSize({ width, height: width < 500 ? 844 : 1000 });
-    await page.goto("/");
+    await page.goto("./");
     await openLab(page, width <= 600);
     await expect(page.getByTestId("sizing-recommendation")).toHaveText(
       "1,000 L",
@@ -83,7 +83,7 @@ for (const width of [1440, 768, 390, 320]) {
     await page.locator(".sizing-methodology > summary").click();
     await page.mouse.move(0, 0);
     await page.locator("#tank-sizing").screenshot({
-      path: `docs/screenshots/build-05-sizing-${width}.png`,
+      path: `docs/screenshots/build-06-local-sizing-${width}.png`,
       animations: "disabled",
     });
     expect(errors).toEqual([]);
@@ -93,7 +93,7 @@ for (const width of [1440, 768, 390, 320]) {
 test("all target choices update locally and preserve original dashboard defaults", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("./");
   await openLab(page);
   await expect(page.getByTestId("sizing-maximum")).toHaveText("7,250 L");
   for (const [target, supply] of [
@@ -125,7 +125,7 @@ test("all target choices update locally and preserve original dashboard defaults
 test("current-only sizes stay separate, signed differences remain accurate, and already-recommended is explicit", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("./");
   await page.getByLabel("Tank capacity", { exact: true }).fill("1234.5");
   await expect(page.locator(".sizing-table tbody tr")).toHaveCount(12);
   await expect(page.getByTestId("sizing-row-1234.5")).toContainText(
@@ -153,7 +153,7 @@ test("current-only sizes stay separate, signed differences remain accurate, and 
 test("dashboard initial water changes its own results but never advantages sizing candidates", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("./");
   const initialLab = await page
     .getByTestId("sizing-recommended-supply")
     .innerText();
@@ -179,7 +179,7 @@ test("zero-benefit cases explain why no recommendation is available and never sh
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/");
+  await page.goto("./");
   await page.getByLabel("Roof area", { exact: true }).fill("0");
   await expect(page.getByTestId("sizing-no-benefit")).toHaveText(
     "No meaningful tank-size recommendation is available under the current scenario.",
@@ -206,7 +206,7 @@ test("zero-benefit cases explain why no recommendation is available and never sh
 test("scenario controls react immediately and chart points have equivalent table values", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("./");
   await openLab(page);
   await expect(page.locator(".sizing-chart .recharts-line-dot")).toHaveCount(
     11,
@@ -243,7 +243,7 @@ test("historical active period is preserved during pending choices and sizing ne
       archiveCalls++;
   });
   await mockWeather(page);
-  await page.goto("/");
+  await page.goto("./");
   await page
     .getByRole("button", { name: "Historical Reanalysis", exact: true })
     .click();
@@ -279,7 +279,7 @@ test("historical active period is preserved during pending choices and sizing ne
   await expect(page.getByTestId("sizing-source")).toContainText("2024");
   expect(archiveCalls).toBe(2);
   await page.locator("#tank-sizing").screenshot({
-    path: "docs/screenshots/build-05-sizing-mocked-366-390.png",
+    path: "docs/screenshots/build-06-local-sizing-mocked-366-390.png",
     animations: "disabled",
   });
   await page
@@ -297,7 +297,7 @@ test("historical active period is preserved during pending choices and sizing ne
 test("sizing export includes all candidate metrics and provenance while daily export stays separate", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("./");
   await page.getByLabel("Tank capacity", { exact: true }).fill("1234.5");
   await page.getByRole("radio", { name: "95%", exact: true }).check();
   const downloadPromise = page.waitForEvent("download");
@@ -340,7 +340,7 @@ test("keyboard navigation reaches the lab, target radios and scrollable data tab
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
+  await page.goto("./");
   await page.getByRole("button", { name: "Open navigation" }).click();
   await page.getByRole("link", { name: "Tank Sizing", exact: true }).focus();
   await page.keyboard.press("Enter");

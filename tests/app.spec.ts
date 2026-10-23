@@ -11,7 +11,7 @@ for (const width of [1440, 768, 390, 320]) {
       if (message.type() === "error") errors.push(message.text());
     });
     await page.setViewportSize({ width, height: width < 500 ? 844 : 1000 });
-    await page.goto("/");
+    await page.goto("./");
     await page.evaluate(() => document.fonts.ready);
     await expect(
       page.getByRole("heading", { name: /Every drop has/ }),
@@ -50,13 +50,13 @@ for (const width of [1440, 768, 390, 320]) {
       })),
     ).toEqual([]);
     await page.screenshot({
-      path: `docs/screenshots/build-05-synthetic-${width}.png`,
+      path: `docs/screenshots/build-06-local-synthetic-${width}.png`,
       fullPage: true,
       animations: "disabled",
     });
     if (width === 390) {
       await page.locator(".results-column").screenshot({
-        path: "docs/screenshots/build-05-synthetic-390-results.png",
+        path: "docs/screenshots/build-06-local-synthetic-390-results.png",
         animations: "disabled",
       });
     }
@@ -67,7 +67,7 @@ for (const width of [1440, 768, 390, 320]) {
 test("inputs, datasets, chart views, daily table and reset update immediately", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("./");
   const original = await page.getByTestId("water-used").innerText();
   await page.getByLabel("Roof area", { exact: true }).fill("0");
   await expect(page.getByTestId("water-used")).toHaveText("0 L");
@@ -105,7 +105,7 @@ test("inputs, datasets, chart views, daily table and reset update immediately", 
 test("handles zero demand, zero tank, invalid drafts, and storage clamping", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("./");
   await page.getByLabel("Daily demand", { exact: true }).fill("0");
   await expect(page.getByTestId("coverage")).toHaveText("—");
   await expect(page.getByText("No demand configured")).toBeVisible();
@@ -137,7 +137,7 @@ test("keyboard navigation reaches the simulator and operates controls", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
+  await page.goto("./");
   await page.keyboard.press("Tab");
   await expect(
     page.getByRole("link", { name: "Skip to simulator" }),
@@ -166,7 +166,7 @@ test("keyboard navigation reaches the simulator and operates controls", async ({
 test("CSV download keeps synthetic provenance and all 30 daily records", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("./");
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("button", { name: "Export results" }).click();
   const download = await downloadPromise;
@@ -193,7 +193,7 @@ test("operates without external network requests", async ({ page }) => {
     )
       externalRequests.push(request.url());
   });
-  await page.goto("/");
+  await page.goto("./");
   await expect(
     page.getByRole("heading", { name: /Every drop has/ }),
   ).toBeVisible();

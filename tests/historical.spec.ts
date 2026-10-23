@@ -48,7 +48,7 @@ for (const width of [1440, 768, 390, 320]) {
     page.on("pageerror", (error) => errors.push(error.message));
     await page.setViewportSize({ width, height: width < 500 ? 844 : 1000 });
     await mockServices(page);
-    await page.goto("/");
+    await page.goto("./");
     await loadEdirne(page);
     await expect(page.getByText("Your 365-day outlook")).toBeVisible();
     await page
@@ -75,7 +75,7 @@ for (const width of [1440, 768, 390, 320]) {
       })),
     ).toEqual([]);
     await page.screenshot({
-      path: `docs/screenshots/build-05-mocked-historical-${width}.png`,
+      path: `docs/screenshots/build-06-local-mocked-historical-${width}.png`,
       fullPage: true,
       animations: "disabled",
     });
@@ -100,7 +100,7 @@ test("switches sources, years and locations explicitly; caches only validated co
     if (request.url().includes("archive-api")) archiveUrls.push(request.url());
   });
   await mockServices(page);
-  await page.goto("/");
+  await page.goto("./");
   await loadEdirne(page);
   expect(archiveUrls).toHaveLength(1);
   const url = new URL(archiveUrls[0]);
@@ -183,7 +183,7 @@ test("invalid year data preserves prior valid results and a manual retry can rec
   page,
 }) => {
   await mockServices(page);
-  await page.goto("/");
+  await page.goto("./");
   await loadEdirne(page);
   const used = await page.getByTestId("water-used").innerText();
   const invalid = archiveFixture(2024);
@@ -223,7 +223,7 @@ for (const failure of ["429", "500", "network", "invalid JSON"] as const) {
           ? route.fulfill({ body: "not json", contentType: "application/json" })
           : route.fulfill({ status: Number(failure), json: { error: true } });
     });
-    await page.goto("/");
+    await page.goto("./");
     await chooseEdirne(page);
     await page
       .getByRole("button", { name: "Load rainfall data", exact: true })
@@ -251,7 +251,7 @@ test("search has threshold, debounce, empty, error and retry states with no auto
     searches++;
     return route.fulfill({ json: { generationtime_ms: 0.1 } });
   });
-  await page.goto("/");
+  await page.goto("./");
   await page.clock.install();
   await page
     .getByRole("button", { name: "Historical Reanalysis", exact: true })
@@ -303,7 +303,7 @@ test("obsolete search and historical downloads cannot overwrite newer selections
       await route.fulfill({ json: namesakes }).catch(() => {});
     } else await route.fulfill({ json: { results: [edirne] } });
   });
-  await page.goto("/");
+  await page.goto("./");
   await page
     .getByRole("button", { name: "Historical Reanalysis", exact: true })
     .click();
@@ -367,7 +367,7 @@ test("stalled archive requests time out once and recover only after manual retry
     await gate;
     await route.fulfill({ json: archiveFixture() }).catch(() => {});
   });
-  await page.goto("/");
+  await page.goto("./");
   await chooseEdirne(page);
   await page.clock.install();
   await page
@@ -414,7 +414,7 @@ test("changing year cancels an in-flight download and late data cannot replace t
     }
     await route.fulfill({ json: archiveFixture(year) }).catch(() => {});
   });
-  await page.goto("/");
+  await page.goto("./");
   await chooseEdirne(page);
   await page
     .getByRole("button", { name: "Load rainfall data", exact: true })
@@ -434,7 +434,7 @@ test("historical CSV contains dated full-year records and provenance", async ({
   page,
 }) => {
   await mockServices(page);
-  await page.goto("/");
+  await page.goto("./");
   await loadEdirne(page);
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("button", { name: "Export results" }).click();

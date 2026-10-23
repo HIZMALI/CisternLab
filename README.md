@@ -1,8 +1,8 @@
-# CisternLab · BUILD 05
+# CisternLab · BUILD 06
 
-**Every drop has a second life.** A local, transparent rooftop rainwater harvesting simulator for Green Shift Hacks 2026. Explore illustrative home, school, and small-facility scenarios using synthetic rainfall or a complete year of historical ERA5 reanalysis. Adjust inputs, inspect every simulated liter, and compare storage capacities in the **Tank Sizing & Decision Lab**. BUILD 05 adds an Environmental Impact & Evidence Studio, a verified archived Edirne example and a printable evidence brief while preserving all established engines and workflows.
+**Every drop has a second life.** A transparent rooftop rainwater harvesting simulator for Green Shift Hacks 2026. Explore illustrative home, school, and small-facility scenarios using synthetic rainfall or a complete year of historical ERA5 reanalysis. Adjust inputs, inspect every simulated liter, and compare storage capacities in the **Tank Sizing & Decision Lab**. BUILD 05 adds an Environmental Impact & Evidence Studio, a verified archived Edirne example and a printable evidence brief while preserving all established engines and workflows.
 
-Choose **DEMO DATA — SYNTHETIC** (offline-ready authored examples) or **HISTORICAL REANALYSIS — ERA5** (modeled climate data from Open-Meteo). All simulation and sizing outputs remain **ESTIMATED RESULTS**, not measured savings or site observations. No backend, account, API key, paid API, database, tracker, or deployment is involved. Fonts are bundled locally. BUILD 06 is not started.
+Choose **DEMO DATA — SYNTHETIC** (offline-ready authored examples) or **HISTORICAL REANALYSIS — ERA5** (modeled climate data from Open-Meteo). All simulation and sizing outputs remain **ESTIMATED RESULTS**, not measured savings or site observations. The application has no backend, account, API key, paid API, database or tracker. Fonts are bundled locally. BUILD 06 prepares GitHub Pages publication and verifies the actual production subpath; release evidence is recorded separately from deterministic tests.
 
 ## Run locally
 
@@ -25,7 +25,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Playwright starts and stops a local **production preview** on port 4173 automatically. Build first. It tests Chromium at 1440, 768, 390, and 320 pixels in both modes; checks keyboard behavior, WCAG A/AA rules with axe, exports, inputs and networking; and writes full-page evidence into `docs/screenshots/`. Historical requests are intercepted with explicitly synthetic transport fixtures, so the test suite never depends on API uptime. `npx playwright show-report` opens the generated, ignored HTML report. `npm run preview -- --host 127.0.0.1 --port 4317` serves the production build manually.
+Playwright starts and stops a local **production preview** on port 4173 at `/CisternLab/` automatically. Build first. It tests Chromium at 1440, 768, 390, and 320 pixels in both modes; checks keyboard behavior, WCAG A/AA rules with axe, exports, inputs and networking; and writes full-page evidence into `docs/screenshots/`. Historical requests are intercepted with explicitly synthetic transport fixtures, so the test suite never depends on API uptime. `npx playwright show-report` opens the generated, ignored HTML report. `npm run preview -- --host 127.0.0.1 --port 4317` serves the production build manually at `http://127.0.0.1:4317/CisternLab/`. Development with `npm run dev` stays at `/`.
 
 Optional real-service browser verification, separate from deterministic tests:
 
@@ -330,3 +330,15 @@ React, strict TypeScript, Vite, Tailwind CSS, Lucide, and Recharts. No additiona
 Run locally, select Historical Reanalysis, search and explicitly select the desired city, select 2023/2024/2025, and press Load rainfall data. Inspect the active period/provenance, set all five scenario controls, and download CSV. Keep that file with its retrieval timestamp and source URL; roof/tank inputs and original daily rainfall are sufficient to reproduce the same deterministic simulation without fetching again. Identical rainfall and scenario inputs yield identical outputs. API responses themselves may change, so a future download of the same URL is not a pinned snapshot.
 
 BUILD 05 stops at verified impact evidence and presentation preparation. No deployment, submission, video, financial payback, CO₂ estimates, forecasting, purchasing, installation design or BUILD 06 work is included.
+
+## Public release and licensing
+
+Original CisternLab code and documentation are [MIT licensed](LICENSE). Weather/location data, fonts, icons and dependencies keep their separate licenses; see [third-party notices](THIRD_PARTY_NOTICES.md). The bundled [DM Sans](public/licenses/DM-Sans-OFL.txt) and [Space Grotesk](public/licenses/Space-Grotesk-OFL.txt) licenses ship with the production site. MIT does not grant commercial access to Open-Meteo’s non-commercial public service.
+
+The [GitHub Actions workflow](.github/workflows/deploy.yml) uses Node.js 24, `npm ci`, TypeScript, lint, deterministic unit tests, production build, formatting and all Chromium browser tests before deployment. Chromium Linux dependencies are installed explicitly. Official actions are pinned to verified release commits. Only the deployment job receives Pages write and OIDC permissions; no personal token or stored deployment secret is required.
+
+For a fork, change the build/preview `base` in `vite.config.ts`, the Playwright base URL and release links to the actual repository name. In repository Settings → Pages, select GitHub Actions. Push to `main` or manually run **Verify and deploy CisternLab**. Both build and preview use `/CisternLab/`; hash navigation needs no history-router fallback. Local development remains on port 4317 at `/`. `dist` is the deployed artifact, not a tracked build folder.
+
+`npm run audit:public` performs a read-only pattern audit of reachable history and tracked files without printing matched secrets. It supplements manual review; it cannot prove the absence of every possible secret. Do not publish a discovered historical credential without remediation.
+
+Use the [production demo checklist](docs/PRODUCTION_DEMO_CHECKLIST.md) for the main user journey. [Release links](docs/DEVPOST_RELEASE_LINKS.md) and [BUILD 06 report](BUILD_06_REPORT.md) will record actual public status and verification evidence.

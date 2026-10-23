@@ -126,7 +126,7 @@ try {
       ),
     );
   });
-  await page.goto(origin);
+  await page.goto(origin + "/CisternLab/");
   evidence.phase = "live city selection";
   await page
     .getByRole("button", { name: "Historical Reanalysis", exact: true })
